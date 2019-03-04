@@ -20,41 +20,38 @@ public class NotificationActivity extends AppCompatActivity {
 
         notificationTextView = findViewById(R.id.notificationTextView);
         notificationTextView.setText("Notification");
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavigation);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
 
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(4);
         menuItem.setChecked(true);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        bottomNavigationView.setOnNavigationItemSelectedListener(menuItem1 -> {
 
-                switch (menuItem.getItemId()){
-                    case R.id.nav_home:
-                        Intent intent1 = new Intent(NotificationActivity.this,HomeActivity.class);
-                        startActivity(intent1);
-                        break;
-                    case R.id.nav_subscribe:
-                        Intent intent2 = new Intent(NotificationActivity.this,SubscribeActivity.class);
-                        startActivity(intent2);
-                        break;
-                    case R.id.nav_post:
-                        Intent intent3 = new Intent(NotificationActivity.this,UploadActivity.class);
-                        startActivity(intent3);
-                        break;
-                    case R.id.nav_read:
-                        Intent intent4 = new Intent(NotificationActivity.this,ReadActivity.class);
-                        startActivity(intent4);
-                        break;
-                    case R.id.nav_notification:
-                        Intent intent5 = new Intent(NotificationActivity.this,NotificationActivity.class);
-                        startActivity(intent5);
-                        break;
-                }
-
-                return false;
+            switch (menuItem1.getItemId()){
+                case R.id.nav_home:
+                    Intent intent1 = new Intent(NotificationActivity.this,HomeActivity.class);
+                    startActivity(intent1);
+                    break;
+                case R.id.nav_subscribe:
+                    Intent intent2 = new Intent(NotificationActivity.this,SubscribeActivity.class);
+                    startActivity(intent2);
+                    break;
+                case R.id.nav_post:
+                    Intent intent3 = new Intent(NotificationActivity.this,UploadActivity.class);
+                    startActivity(intent3);
+                    break;
+                case R.id.nav_read:
+                    Intent intent4 = new Intent(NotificationActivity.this,ReadActivity.class);
+                    startActivity(intent4);
+                    break;
+                case R.id.nav_notification:
+                    Intent intent5 = new Intent(NotificationActivity.this,NotificationActivity.class);
+                    startActivity(intent5);
+                    break;
             }
+
+            return false;
         });
     }
 
