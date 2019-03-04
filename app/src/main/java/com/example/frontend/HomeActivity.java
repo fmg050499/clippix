@@ -32,7 +32,7 @@ public class HomeActivity extends AppCompatActivity {
         intentButton=findViewById(R.id.intentButton);
 
         intentButton.setOnClickListener((View view)->{
-            Intent intent = new Intent(HomeActivity.this,LogInActivity.class);
+            Intent intent = new Intent(HomeActivity.this, LogInActivity.class);
             startActivity(intent);
         });
 

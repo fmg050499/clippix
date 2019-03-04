@@ -19,6 +19,7 @@ public class ReadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_read);
 
         readTextView = findViewById(R.id.readTextView);
+        readTextView.setText("Read");
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavigation);
 
         Menu menu = bottomNavigationView.getMenu();

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LogInActivity"
+    tools:context=".RegisterActivity"
     android:background="@color/design_default_color_primary">
 
 
@@ -16,7 +16,7 @@
         android:layout_above="@+id/lastNameEditText"
         android:ems="10"
         android:hint="First Name"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="20dp"
@@ -32,7 +32,7 @@
         android:layout_centerInParent="true"
         android:ems="10"
         android:hint="Last Name"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="20dp"
@@ -50,7 +50,7 @@
         android:layout_below="@+id/lastNameEditText"
         android:ems="10"
         android:hint="email"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="20dp"
@@ -67,7 +67,7 @@
         android:layout_below="@+id/emailEditText"
         android:ems="10"
         android:hint="password"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="20dp"
@@ -82,11 +82,13 @@
         android:layout_below="@+id/passwordEditText"
         android:textSize="20dp"
         android:text="Sign Up"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
         android:background="@drawable/input_background" />
+
+
 
 </RelativeLayout>

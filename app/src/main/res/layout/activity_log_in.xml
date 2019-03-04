@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -19,7 +18,7 @@
         android:layout_margin="20dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="20dp"
+        android:paddingTop="10dp"
         android:paddingBottom="20dp"
         android:padding="25dp"
         android:background="@drawable/input_background"
@@ -39,7 +38,7 @@
         android:paddingBottom="20dp"
         android:background="@drawable/input_background"
         android:inputType="textPersonName|textPassword" />
-    
+
     <Button
         android:id="@+id/logInButton"
         android:layout_width="match_parent"
@@ -47,6 +46,20 @@
         android:layout_below="@+id/passwordEditText"
         android:textSize="20dp"
         android:text="Log in"
+        android:layout_margin="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:background="@drawable/input_background" />
+
+    <Button
+        android:id="@+id/createAccountButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logInButton"
+        android:textSize="20dp"
+        android:text="Create account"
         android:layout_margin="20dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"

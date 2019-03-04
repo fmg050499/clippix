@@ -20,13 +20,16 @@
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_above="@+id/intentButton"
             android:id="@+id/homeTextView"
             android:textAlignment="center"
             android:textSize="30sp"/>
@@ -36,8 +39,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
             android:textSize="20dp"
-            android:text="Log in"
+            android:text="back to log in"
             android:layout_margin="20dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
