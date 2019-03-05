@@ -11,15 +11,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class HomeActivity extends AppCompatActivity {
+    FirebaseAuth authentication;
 
     TextView homeTextView;
-    Button intentButton;
+    Button logOutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        authentication = FirebaseAuth.getInstance();
 
         homeTextView=findViewById(R.id.homeTextView);
         homeTextView.setText("Home");
@@ -29,11 +33,10 @@ public class HomeActivity extends AppCompatActivity {
         MenuItem menuItem = menu.getItem(0);
         menuItem.setChecked(true);
 
-        intentButton=findViewById(R.id.intentButton);
+        logOutButton=findViewById(R.id.logOutButton);
 
-        intentButton.setOnClickListener((View view)->{
-            Intent intent = new Intent(HomeActivity.this, LogInActivity.class);
-            startActivity(intent);
+        logOutButton.setOnClickListener((View view)->{
+            logOut();
         });
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -66,6 +69,12 @@ public class HomeActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void logOut() {
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(this,LogInActivity.class);
+        startActivity(intent);
     }
 
 }
