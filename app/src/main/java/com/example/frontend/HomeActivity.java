@@ -54,24 +54,32 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         mNews = new ArrayList<>();
 
+        mAdapter = new ImageAdapter(HomeActivity.this,mNews);
+        mRecyclerView.setAdapter(mAdapter);
         db
                 .collection("news")
                 .get()
                 .addOnCompleteListener((Task<QuerySnapshot> task)->{
 
-                    String output = "";
                     for (QueryDocumentSnapshot document : task.getResult()){
                         Map<String, Object> data = document.getData();
+
 
                         String headline = data.get("headline").toString();
                         String body = data.get("body").toString();
                         String filename = data.get("filename").toString();
+                        News news = new News (headline,body,filename);
 
 
 
+<<<<<<< HEAD
                         mNews.add();
+=======
+                        mNews.add(news);
+>>>>>>> c2c612cf9274e06c0dcc2e6a20d1b461967c80f1
                     }
                 });
+
 
 //        drawer = findViewById(R.id.drawerLayout);
 //        Toolbar toolbar = findViewById(R.id.toolbar);
