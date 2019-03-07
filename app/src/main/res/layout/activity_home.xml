@@ -14,14 +14,15 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="700dp"
+            android:background="@color/colorGrey"/>
+
 
         <Button
             android:id="@+id/logOutButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
+            android:layout_alignBottom="@+id/recyclerView"
             android:layout_centerHorizontal="true"
             android:textSize="20dp"
             android:text="back to log in"
@@ -33,6 +34,8 @@
             android:background="@drawable/input_background" />
 
     </RelativeLayout>
+
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,5 +52,7 @@
             app:itemTextColor="@color/colorGrey"/>
 
     </android.support.design.widget.AppBarLayout>
+
+
 
 </android.support.design.widget.CoordinatorLayout>

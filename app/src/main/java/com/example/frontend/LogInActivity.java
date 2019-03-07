@@ -60,7 +60,6 @@ public class LogInActivity extends AppCompatActivity {
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
-<<<<<<< HEAD
         if (email.equals("")) {
             Toast.makeText(this, "Email field is empty", Toast.LENGTH_LONG).show();
         }else {
@@ -76,7 +75,6 @@ public class LogInActivity extends AppCompatActivity {
                         }
                     });
         }
-=======
         authentication.signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener((Task<AuthResult> task) -> {
                     if(task.isSuccessful()){
@@ -89,8 +87,5 @@ public class LogInActivity extends AppCompatActivity {
                         Toast.makeText(this,"Failure",Toast.LENGTH_LONG).show();
                     }
                 });
-
->>>>>>> a433c3fde37981f3e54d7010961a34c0ccccc1cf
-
     }
 }

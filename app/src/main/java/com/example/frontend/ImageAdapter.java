@@ -43,7 +43,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         holder.headlineTextView.setText(newsCurrent.getHeadline());
 
         try {
-            StorageReference tempRef = storageRefTemp.child("uploads").child(newsCurrent.getFilename());
+            StorageReference tempRef = storageRefTemp.child("news").child(newsCurrent.getFilename());
 
             File file = File.createTempFile("images", ".jpg");
             tempRef
@@ -61,15 +61,15 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     public int getItemCount() {
         return mNews.size();
     }
-    
+
     public class ImageViewHolder extends RecyclerView.ViewHolder{
         public TextView headlineTextView;
         public ImageView homeImageView;
 
-        public ImageViewHolder(@NonNull View itemView) {
+        public ImageViewHolder(View itemView) {
             super(itemView);
 
-            headlineTextView = itemView.findViewById(R.id.headlineEditText);
+            headlineTextView = itemView.findViewById(R.id.headlineTextView);
             homeImageView = itemView.findViewById(R.id.homeImageView);
         }
     }
