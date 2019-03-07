@@ -69,7 +69,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-                        mNews.add()
+                        mNews.add();
                     }
                 });
 
