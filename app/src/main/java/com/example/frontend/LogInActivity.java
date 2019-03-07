@@ -60,18 +60,21 @@ public class LogInActivity extends AppCompatActivity {
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
-        authentication.signInWithEmailAndPassword(email,password)
-                .addOnCompleteListener((Task<AuthResult> task) -> {
-                    if(task.isSuccessful()){
-                        Toast.makeText(this,"Successful",Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(this, HomeActivity.class);
-                        startActivity(intent);
+        if (email.equals("")) {
+            Toast.makeText(this, "Email field is empty", Toast.LENGTH_LONG).show();
+        }else {
+            authentication.signInWithEmailAndPassword(email,password)
+                    .addOnCompleteListener((Task<AuthResult> task) -> {
+                        if(task.isSuccessful()){
+                            Toast.makeText(this,"Successful",Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(this, HomeActivity.class);
+                            startActivity(intent);
 
-                    }else {
-                        Toast.makeText(this,"Failure",Toast.LENGTH_LONG).show();
-                    }
-                });
-
+                        }else {
+                            Toast.makeText(this,"Failure",Toast.LENGTH_LONG).show();
+                        }
+                    });
+        }
 
     }
 }
