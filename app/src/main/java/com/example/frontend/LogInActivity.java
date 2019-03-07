@@ -65,6 +65,7 @@ public class LogInActivity extends AppCompatActivity {
                     if(task.isSuccessful()){
                         Toast.makeText(this,"Successful",Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(this, HomeActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
 
                     }else {

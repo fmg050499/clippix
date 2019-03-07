@@ -3,8 +3,13 @@ package com.example.frontend;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,10 +18,11 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     FirebaseAuth authentication;
 
-    TextView homeTextView;
+    private DrawerLayout drawer;
+
     Button logOutButton;
 
     @Override
@@ -25,8 +31,26 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         authentication = FirebaseAuth.getInstance();
 
-        homeTextView=findViewById(R.id.homeTextView);
-        homeTextView.setText("Home");
+//        drawer = findViewById(R.id.drawerLayout);
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//
+//        NavigationView navigationView = findViewById(R.id.viewNav);
+//        navigationView.setNavigationItemSelectedListener(this);
+//
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigationDrawerOpen,
+//                R.string.navigationDrawerClose);
+//        DrawerLayout.DrawerListener drawerListener = null;
+//        drawer.addDrawerListener(drawerListener);
+//        toggle.syncState();
+
+//        if (savedInstanceState == null) {
+//            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,
+//                    new MessageFragment()).commit();
+//            navigationView.setCheckedItem(R.id.nav_message);
+//        }
+
+
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavigation);
 
         Menu menu = bottomNavigationView.getMenu();
@@ -77,4 +101,18 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)){
+            drawer.closeDrawer(GravityCompat.START);
+        }else {
+            super.onBackPressed();
+        }
+
+    }
 }

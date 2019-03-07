@@ -2,8 +2,10 @@ package com.example.frontend;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -27,6 +29,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -127,7 +130,14 @@ public class UploadActivity extends AppCompatActivity {
                 && data != null && data.getData() != null) {
             imageUri = data.getData();
 
-            Picasso.get().load(imageUri).into(imageView);
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
+                imageView.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
         }
     }
 
