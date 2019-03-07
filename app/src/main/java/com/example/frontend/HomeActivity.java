@@ -9,6 +9,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,12 +18,26 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     FirebaseAuth authentication;
+    FirebaseFirestore db;
 
     private DrawerLayout drawer;
+
+    private RecyclerView mRecyclerView;
+    private ImageAdapter mAdapter;
+
+    private List<News> mNews;
 
     Button logOutButton;
 
@@ -30,6 +46,32 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         authentication = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
+        mRecyclerView = findViewById(R.id.recyclerView);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        mNews = new ArrayList<>();
+
+        db
+                .collection("news")
+                .get()
+                .addOnCompleteListener((Task<QuerySnapshot> task)->{
+
+                    String output = "";
+                    for (QueryDocumentSnapshot document : task.getResult()){
+                        Map<String, Object> data = document.getData();
+
+                        String headline = data.get("headline").toString();
+                        String body = data.get("body").toString();
+                        String filename = data.get("filename").toString();
+
+
+
+                        mNews.add()
+                    }
+                });
 
 //        drawer = findViewById(R.id.drawerLayout);
 //        Toolbar toolbar = findViewById(R.id.toolbar);
