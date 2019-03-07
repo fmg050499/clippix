@@ -67,10 +67,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         String body = data.get("body").toString();
                         String filename = data.get("filename").toString();
 
+                        News news = new News (headline,body,filename);
 
-
-                        mNews.add()
+                        mNews.add(news);
                     }
+
+                    mAdapter = new ImageAdapter(this,mNews);
+                    mRecyclerView.setAdapter(mAdapter);
                 });
 
 //        drawer = findViewById(R.id.drawerLayout);

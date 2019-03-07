@@ -55,17 +55,13 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
     }
 
     @Override
     public int getItemCount() {
         return mNews.size();
     }
-
-
+    
     public class ImageViewHolder extends RecyclerView.ViewHolder{
         public TextView headlineTextView;
         public ImageView homeImageView;
