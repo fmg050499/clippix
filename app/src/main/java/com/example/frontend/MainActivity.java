@@ -15,8 +15,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(this, LogInActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, LogInActivity.class);
+//        startActivity(intent);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavigation);
 
