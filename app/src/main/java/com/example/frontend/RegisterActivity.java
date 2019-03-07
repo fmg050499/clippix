@@ -41,20 +41,27 @@ public class RegisterActivity extends AppCompatActivity {
         String password = passwordEditText.getText().toString();
 
         int length = password.length();
-        if (length < 8){
-            Toast.makeText(this, "Password must be not less than 8 characters",Toast.LENGTH_LONG).show();
-        } else {
-            authentication.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener((Task<AuthResult> task) -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(this, "success", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(this, HomeActivity.class);
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(this, "Failure", Toast.LENGTH_LONG).show();
-                        }
-                    });
+        if (email.equals("")){
+            Toast.makeText(this, "Email field is empty",Toast.LENGTH_LONG).show();
+        }else{
+            if (length < 8){
+                Toast.makeText(this, "Password must be not less than 8 characters",Toast.LENGTH_LONG).show();
+            } else {
+                authentication.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener((Task<AuthResult> task) -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(this, "success", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(this, HomeActivity.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(this, "Failure", Toast.LENGTH_LONG).show();
+                            }
+                        });
+            }
         }
+
+
+
     }
 
 }
