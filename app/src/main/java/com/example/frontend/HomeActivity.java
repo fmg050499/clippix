@@ -77,13 +77,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         output+= document.getId()+headline+body+filename;
                         News news = new News (headline,body,filename);
 
-
-
-<<<<<<< HEAD
                         mNews.add();
-=======
+
                         mNews.add(news);
->>>>>>> c2c612cf9274e06c0dcc2e6a20d1b461967c80f1
+
                     }
                     textView.setText(output);
                 });
