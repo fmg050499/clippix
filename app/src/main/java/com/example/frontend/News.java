@@ -4,10 +4,12 @@ public class News {
     String headline;
     String body;
     String filename;
+    String userId;
 
-    public News(String headline, String body, String filename) {
+    public News(String headline, String body, String filename, String userId) {
         this.headline = headline;
         this.body = body;
+        this.userId = userId;
         this.filename = filename;
     }
 

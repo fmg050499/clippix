@@ -8,18 +8,81 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class NotificationActivity extends AppCompatActivity {
 
     TextView notificationTextView;
+    TextView agencyNameTextView;
+    FirebaseFirestore db;
+
+    private List<String> mSubscriptions;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
 
+        db = FirebaseFirestore.getInstance();
+
         notificationTextView = findViewById(R.id.notificationTextView);
         notificationTextView.setText("Notification");
+        agencyNameTextView =findViewById(R.id.agencyNameTextView);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
+
+        mSubscriptions = new ArrayList<>();
+
+        db
+                .collection("subscription")
+                .get()
+                .addOnCompleteListener((Task<QuerySnapshot> task)->{
+
+                    for (QueryDocumentSnapshot document : task.getResult()){
+                        Map<String, Object> data = document.getData();
+
+                        String userId = data.get("userId").toString();
+
+                        mSubscriptions.add(userId);
+                    }
+                });
+
+        db
+                .collection("news")
+                .get()
+                .addOnCompleteListener((Task<QuerySnapshot> task)->{
+
+                    String agenciesSubscribed = "";
+                    for (QueryDocumentSnapshot document : task.getResult()){
+                        Map<String, Object> data = document.getData();
+
+                        String userId = data.get("user_id").toString();
+                        String fileName = data.get("filename").toString();
+                        String headline = data.get("headline").toString();
+                        String body = data.get("body").toString();
+
+
+
+                        for (int i=0 ; i<=mSubscriptions.size(); i++){
+                            if (mSubscriptions.get(i).equals(userId)){
+                                agenciesSubscribed+=userId;
+                            }
+                        }
+                    }
+                    agencyNameTextView.setText(agenciesSubscribed);
+                });
+
+
+
+
 
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(4);

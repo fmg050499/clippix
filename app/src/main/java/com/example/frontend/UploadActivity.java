@@ -22,6 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -46,9 +47,10 @@ public class UploadActivity extends AppCompatActivity {
 
     private ImageView imageView;
     private ProgressBar progressBar;
-
+    private FirebaseAuth authentication;
     private String fileName;
     private Uri imageUri;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class UploadActivity extends AppCompatActivity {
         bodyEditText= findViewById(R.id.bodyEditText);
 
         imageView = findViewById(R.id.imageView);
+        authentication = FirebaseAuth.getInstance();
 
         progressBar = findViewById(R.id.progressBar);
 
@@ -168,8 +171,11 @@ public class UploadActivity extends AppCompatActivity {
 
                         String headline = headlineEditText.getText().toString();
                         String body = bodyEditText.getText().toString();
+                        String userId = authentication.getCurrentUser().getUid();
+
 
                         Map<String, Object> news = new HashMap<>();
+                        news.put("user_id", userId);
                         news.put("headline",headline);
                         news.put("body", body);
                         news.put("filename",fileName);
