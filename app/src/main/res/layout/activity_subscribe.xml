@@ -32,6 +32,14 @@
             android:textAlignment="center"
             android:textSize="30sp"/>
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/subscriptionsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="700dp"
+            android:background="@color/colorAccent">
+
+        </android.support.v7.widget.RecyclerView>
+
     </RelativeLayout>
 
     <android.support.design.widget.AppBarLayout

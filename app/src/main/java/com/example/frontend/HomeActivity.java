@@ -32,6 +32,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     FirebaseAuth authentication;
     FirebaseFirestore db;
 
+    TextView textView;
+
     private DrawerLayout drawer;
 
     private RecyclerView mRecyclerView;
@@ -56,11 +58,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         mAdapter = new ImageAdapter(HomeActivity.this,mNews);
         mRecyclerView.setAdapter(mAdapter);
+
+        textView = findViewById(R.id.textView);
+
         db
                 .collection("news")
                 .get()
                 .addOnCompleteListener((Task<QuerySnapshot> task)->{
 
+                    String output ="";
                     for (QueryDocumentSnapshot document : task.getResult()){
                         Map<String, Object> data = document.getData();
 
@@ -68,12 +74,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         String headline = data.get("headline").toString();
                         String body = data.get("body").toString();
                         String filename = data.get("filename").toString();
+                        output+= document.getId()+headline+body+filename;
                         News news = new News (headline,body,filename);
 
 
 
                         mNews.add(news);
                     }
+                    textView.setText(output);
                 });
 
 
