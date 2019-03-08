@@ -77,8 +77,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         output+= document.getId()+headline+body+filename;
                         News news = new News (headline,body,filename);
 
-                        mNews.add();
-
                         mNews.add(news);
 
                     }
