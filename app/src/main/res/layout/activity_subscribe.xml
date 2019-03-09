@@ -5,42 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SubscribeActivity"
-    android:background="@color/colorGrey">
+    android:background="@color/colorPrimary">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.v7.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/toolbarTop"
-            android:background="@drawable/white_grey_border_bottom">
-
-        </android.support.v7.widget.Toolbar>
-
-    </android.support.design.widget.AppBarLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/subscribeTextView"
-            android:layout_centerInParent="true"
-            android:textAlignment="center"
-            android:textSize="30sp"/>
-
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/subscriptionsRecyclerView"
+            android:id="@+id/subscriptionRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="700dp"
-            android:background="@color/colorAccent">
+            android:background="@color/colorAccent"/>
 
-        </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/subscriptionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minLines="5" />
 
     </RelativeLayout>
+
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -58,5 +43,7 @@
             app:itemTextColor="@color/colorGrey"/>
 
     </android.support.design.widget.AppBarLayout>
+
+
 
 </android.support.design.widget.CoordinatorLayout>
