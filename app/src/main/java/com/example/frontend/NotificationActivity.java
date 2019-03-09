@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -21,10 +23,11 @@ import java.util.Map;
 public class NotificationActivity extends AppCompatActivity {
 
     TextView notificationTextView;
-    TextView agencyNameTextView;
     FirebaseFirestore db;
 
     private List<String> mSubscriptions;
+    private RecyclerView mRecyclerView;
+    private ImageAdapter mAdapter;
 
 
     @Override
@@ -34,12 +37,16 @@ public class NotificationActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        notificationTextView = findViewById(R.id.notificationTextView);
-        notificationTextView.setText("Notification");
-        agencyNameTextView =findViewById(R.id.agencyNameTextView);
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
+        mRecyclerView = findViewById(R.id.recyclerView);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mSubscriptions = new ArrayList<>();
+
+//        mAdapter = new ImageAdapter(this,mSubscriptions);
+        mRecyclerView.setAdapter(mAdapter);
+
+//        textView = findViewById(R.id.textView);
 
         db
                 .collection("subscription")
@@ -77,13 +84,13 @@ public class NotificationActivity extends AppCompatActivity {
                             }
                         }
                     }
-                    agencyNameTextView.setText(agenciesSubscribed);
+//                    agencyNameTextView.setText(agenciesSubscribed);
                 });
 
 
 
 
-
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavigation);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(4);
         menuItem.setChecked(true);

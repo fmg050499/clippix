@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class SubscribeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SubscribeAdapter.OnItemClickListener{
+public class SubscribeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     FirebaseAuth authentication;
     FirebaseFirestore db;
 
@@ -58,6 +58,14 @@ public class SubscribeActivity extends AppCompatActivity implements NavigationVi
         mAdapter = new SubscribeAdapter(this,mSubscription);
         mRecyclerView.setAdapter(mAdapter);
 
+        mAdapter.setOnItemClickListener(new SubscribeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Subscription subscription =mSubscription.get(position);
+                Toast.makeText(SubscribeActivity.this, ""+subscription.getSubscription(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
         textView = findViewById(R.id.subscriptionTextView);
 
         db
@@ -74,39 +82,13 @@ public class SubscribeActivity extends AppCompatActivity implements NavigationVi
                         output+= document.getId()+agency;
                         Subscription subscription = new Subscription(agency);
 
-
-
-//<<<<<<< HEAD
-                        //mNews.add();
-//=======
                         mSubscription.add(subscription);
-//>>>>>>> c2c612cf9274e06c0dcc2e6a20d1b461967c80f1
+
                     }
                     textView.setText(output);
                 });
 
-
-//        drawer = findViewById(R.id.drawerLayout);
-//        Toolbar toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//
-//        NavigationView navigationView = findViewById(R.id.viewNav);
-//        navigationView.setNavigationItemSelectedListener(this);
-//
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigationDrawerOpen,
-//                R.string.navigationDrawerClose);
-//        DrawerLayout.DrawerListener drawerListener = null;
-//        drawer.addDrawerListener(drawerListener);
-//        toggle.syncState();
-
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,
-//                    new MessageFragment()).commit();
-//            navigationView.setCheckedItem(R.id.nav_message);
-//        }
-
-
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavigation);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
 
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(0);
@@ -160,28 +142,28 @@ public class SubscribeActivity extends AppCompatActivity implements NavigationVi
         }
     }
 
-    public void subscribe(){
-
-        FirebaseMessaging.getInstance().subscribeToTopic(topic)
-                .addOnCompleteListener((Task <Void> task)->{
-                    if(task.isSuccessful()){
-                        Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(this, "failure", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-
-    }
-    public void unsubscribe(){
-
-        FirebaseMessaging.getInstance().unsubscribeFromTopic(topic)
-                .addOnCompleteListener((task)->{
-                    if(task.isSuccessful()){
-                        Toast.makeText(this, "Unsubscribed", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(this, "Unsubscription Failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
+//    public void subscribe(){
+//
+//        FirebaseMessaging.getInstance().subscribeToTopic(topic)
+//                .addOnCompleteListener((Task <Void> task)->{
+//                    if(task.isSuccessful()){
+//                        Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
+//                    }else{
+//                        Toast.makeText(this, "failure", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//
+//
+//    }
+//    public void unsubscribe(){
+//
+//        FirebaseMessaging.getInstance().unsubscribeFromTopic(topic)
+//                .addOnCompleteListener((task)->{
+//                    if(task.isSuccessful()){
+//                        Toast.makeText(this, "Unsubscribed", Toast.LENGTH_SHORT).show();
+//                    }else{
+//                        Toast.makeText(this, "Unsubscription Failed", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//    }
 }
