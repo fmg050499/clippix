@@ -70,23 +70,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     for (QueryDocumentSnapshot document : task.getResult()){
                         Map<String, Object> data = document.getData();
 
-
+                        String userId = data.get("user_id").toString();
+                        String fileName = data.get("filename").toString();
                         String headline = data.get("headline").toString();
                         String body = data.get("body").toString();
-                        String filename = data.get("filename").toString();
-                        output+= document.getId()+headline+body+filename;
-                        News news = new News (headline,body,filename);
 
+                        output+= document.getId()+headline+body+userId;
+                        News news = new News (headline,body,fileName,userId);
 
-
-//<<<<<<< HEAD
-                        //mNews.add();
-//=======
                         mNews.add(news);
-//>>>>>>> c2c612cf9274e06c0dcc2e6a20d1b461967c80f1
                     }
                     textView.setText(output);
                 });
+
+
 
 
 //        drawer = findViewById(R.id.drawerLayout);
