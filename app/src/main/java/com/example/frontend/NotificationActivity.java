@@ -15,10 +15,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -37,7 +41,7 @@ public class NotificationActivity extends AppCompatActivity{
     private RecyclerView mRecyclerView;
     private NotificationAdapter mAdapter;
 
-    private List<String> mSubscriptions;
+    private List<News> mSubscriptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,50 +60,43 @@ public class NotificationActivity extends AppCompatActivity{
         mRecyclerView.setAdapter(mAdapter);
 
         textView = findViewById(R.id.notificationTextView);
-        textView.setText("hello");
+//        textView.setText("hello");
 
         db
                 .collection("subscription")
                 .get()
                 .addOnCompleteListener((Task<QuerySnapshot> task)->{
 
+                    CollectionReference newsRef = db.collection("news");
+
+                    String id = "";
                     for (QueryDocumentSnapshot document : task.getResult()){
                         Map<String, Object> data = document.getData();
 
                         String userId = data.get("userId").toString();
 
-                        mSubscriptions.add(userId);
-                    }
-                });
+                        Query query = newsRef.whereEqualTo("user_id", userId );
 
-        db
-                .collection("news")
-                .get()
-                .addOnCompleteListener((Task<QuerySnapshot> task)->{
+                        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()){
+                                    for(QueryDocumentSnapshot document : task.getResult()){
+                                        News news = document.toObject(News.class);
+                                        mSubscriptions.add(news);
 
-                    String agenciesSubscribed = "";
-                    for (QueryDocumentSnapshot document : task.getResult()){
-                        Map<String, Object> data = document.getData();
+                                    }
 
-                        String userId = data.get("user_id").toString();
-                        String fileName = data.get("filename").toString();
-                        String headline = data.get("headline").toString();
-                        String body = data.get("body").toString();
-                        for (int i=0 ; i<=mSubscriptions.size(); i++){
-                            if (mSubscriptions.get(i).equals(userId)){
-                                agenciesSubscribed+=userId;
+                                }else{
+                                    Toast.makeText(NotificationActivity.this, "lawlaw", Toast.LENGTH_LONG).show();
+                                }
                             }
-                        }
+                        });
 
-
-//                        for (int i=0 ; i<=mSubscriptions.size(); i++){
-//                            if (mSubscriptions.get(i).equals(userId)){
-//                                agenciesSubscribed+=userId;
-//                            }
-//                        }
                     }
-                    textView.setText("hello");
+                    textView.setText(id);
                 });
+
 
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavigation);

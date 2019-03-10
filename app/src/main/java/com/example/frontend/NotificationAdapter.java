@@ -17,9 +17,9 @@ import java.util.List;
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
     private StorageReference storageRefTemp;
     private Context mContext;
-    private List<String> mSubscription;
+    private List<News> mSubscription;
 
-    public NotificationAdapter(Context context, List<String> subscriptions){
+    public NotificationAdapter(Context context, List<News> subscriptions){
         mContext = context;
         mSubscription = subscriptions;
     }
@@ -35,8 +35,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storageRefTemp = storage.getReference();
 
-        String subscriptionCurrent = mSubscription.get(position);
-        holder.headlineTextView.setText(subscriptionCurrent);
+        News subscriptionCurrent = mSubscription.get(position);
+        holder.headlineTextView.setText(subscriptionCurrent.headline);
 
 
     }

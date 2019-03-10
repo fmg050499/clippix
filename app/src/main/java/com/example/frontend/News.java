@@ -7,6 +7,8 @@ public class News {
     String userId;
 
     public News(String headline, String body, String filename, String userId) {
+
+
         this.headline = headline;
         this.body = body;
         this.userId = userId;
