@@ -153,15 +153,15 @@ public class UploadActivity extends AppCompatActivity {
 
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
-            imageUri = getImageUri(photo);
+            //imageUri = getImageUri(photo);
             imageView.setImageBitmap(photo);
         }
     }
 
-    public Uri getImageUri(Bitmap photo) {
+    public Uri getImageUri(Context inContext, Bitmap photo) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(getContentResolver(), photo, "Title", null);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), photo, "Title", null);
         return Uri.parse(path);
     }
 

@@ -61,27 +61,27 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         textView = findViewById(R.id.textView);
 
-        db
-                .collection("news")
-                .get()
-                .addOnCompleteListener((Task<QuerySnapshot> task)->{
-
-                    String output ="";
-                    for (QueryDocumentSnapshot document : task.getResult()){
-                        Map<String, Object> data = document.getData();
-
-                        String userId = data.get("user_id").toString();
-                        String fileName = data.get("filename").toString();
-                        String headline = data.get("headline").toString();
-                        String body = data.get("body").toString();
-
-                        output+= document.getId()+headline+body+userId;
-                        News news = new News (headline,body,fileName,userId);
-
-                        mNews.add(news);
-                    }
-                    textView.setText(output);
-                });
+//        db
+//                .collection("news")
+//                .get()
+//                .addOnCompleteListener((Task<QuerySnapshot> task)->{
+//
+//                    String output ="";
+//                    for (QueryDocumentSnapshot document : task.getResult()){
+//                        Map<String, Object> data = document.getData();
+//
+//                        String userId = data.get("user_id").toString();
+//                        String fileName = data.get("filename").toString();
+//                        String headline = data.get("headline").toString();
+//                        String body = data.get("body").toString();
+//
+//                        output+= document.getId()+headline+body+userId;
+//                        News news = new News (headline,body,fileName,userId);
+//
+//                        mNews.add(news);
+//                    }
+//                    textView.setText(output);
+//                });
 
 
 

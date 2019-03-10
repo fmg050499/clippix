@@ -29,19 +29,18 @@ public class Subscribe {
     public void subscribe(String topic ){
         FirebaseMessaging.getInstance().subscribeToTopic(topic);
 
-//        FirebaseFirestore db;
-//        FirebaseAuth auth;
-//        auth = FirebaseAuth.getInstance();
-//
-//        db = FirebaseFirestore.getInstance();
-//
-//        Map<String, Object> subs = new HashMap<>();
-//        subs.put("subs", topic);
-//
-//        db.collection("subs"+auth.getUid())
-//                .add(subs);
+        FirebaseFirestore db;
+        FirebaseAuth auth;
+        auth = FirebaseAuth.getInstance();
 
+        db = FirebaseFirestore.getInstance();
 
+        Map<String, Object> subs = new HashMap<>();
+        subs.put("subs", topic);
+        subs.put("userId",auth.getUid());
+
+        db.collection("subs")
+                .add(subs);
     }
 
     public void unsubscribe(String topic){
