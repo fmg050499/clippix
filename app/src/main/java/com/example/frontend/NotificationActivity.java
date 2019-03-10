@@ -1,6 +1,7 @@
 package com.example.frontend;
 
 import android.content.Intent;
+import android.icu.lang.UScript;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -42,6 +43,7 @@ public class NotificationActivity extends AppCompatActivity{
     private NotificationAdapter mAdapter;
 
     private List<News> mSubscriptions;
+    private List<String> mSubs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class NotificationActivity extends AppCompatActivity{
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mSubscriptions = new ArrayList<>();
+        mSubs = new ArrayList<>();
 
         mAdapter = new NotificationAdapter(NotificationActivity.this,mSubscriptions);
         mRecyclerView.setAdapter(mAdapter);
@@ -62,41 +65,54 @@ public class NotificationActivity extends AppCompatActivity{
         textView = findViewById(R.id.notificationTextView);
 //        textView.setText("hello");
 
-        db
-                .collection("subscription")
-                .get()
-                .addOnCompleteListener((Task<QuerySnapshot> task)->{
+//
+        CollectionReference subsCollectionRef = db.collection("subs");
+//
+//
+//        Query subsQuery = subsCollectionRef
+//                .whereEqualTo("userId", authentication.getCurrentUser().getUid());
+//
+//        subsQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()){
+//                    for(QueryDocumentSnapshot document : task.getResult()){
+//                        String topics = document.get("tagName").toString();
+//                        mSubs.add(topics);
+//                    }
+//                }
+//            }
+//        });
+//
+//       db
+//                .collection("subs")
+//               .whereEqualTo("userId", authentication.getCurrentUser().getUid())
+//                .get()
+//                .addOnCompleteListener((Task<QuerySnapshot> task)->{
+//
+//                    String output ="";
+//                    for (QueryDocumentSnapshot document : task.getResult()){
+//                        Map<String, Object> data = document.getData();
+//
+//                        String topics = data.get("tagName").toString();
+//                        output += topics;
+//
+//                        mSubs.add(topics);
+//                    }
+//                    textView.setText(output);
+//                });
+//
 
-                    CollectionReference newsRef = db.collection("news");
 
-                    String id = "";
-                    for (QueryDocumentSnapshot document : task.getResult()){
-                        Map<String, Object> data = document.getData();
 
-                        String userId = data.get("userId").toString();
-
-                        Query query = newsRef.whereEqualTo("user_id", userId );
-
-                        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()){
-                                    for(QueryDocumentSnapshot document : task.getResult()){
-                                        News news = document.toObject(News.class);
-                                        mSubscriptions.add(news);
-
-                                    }
-
-                                }else{
-                                    Toast.makeText(NotificationActivity.this, "lawlaw", Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        });
-
-                    }
-                    textView.setText(id);
-                });
-
+//        db
+//                .collection("news")
+//                .get()
+//                .addOnCompleteListener((Task<QuerySnapshot> task)->{
+//
+//
+//                })
+//
 
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavigation);
