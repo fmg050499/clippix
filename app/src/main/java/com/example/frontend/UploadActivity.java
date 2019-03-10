@@ -1,6 +1,7 @@
 package com.example.frontend;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -30,18 +31,21 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
 public class UploadActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
+    private static final int CAMERA_REQUEST_CODE = 1;
 
     private FirebaseFirestore db;
     private StorageReference storageRef;
     private StorageTask mUploadTask;
 
-    private Button uploadButton, chooseImageButton;
+    private Button uploadButton, chooseImageButton, openCameraButton;
 
     private EditText headlineEditText,bodyEditText;
 
@@ -61,6 +65,7 @@ public class UploadActivity extends AppCompatActivity {
 
         uploadButton = findViewById(R.id.uploadButton);
         chooseImageButton = findViewById(R.id.chooseImageButton);
+        openCameraButton = findViewById(R.id.openCameraButton);
 
         headlineEditText = findViewById(R.id.headlineEditText);
         bodyEditText= findViewById(R.id.bodyEditText);
@@ -72,6 +77,7 @@ public class UploadActivity extends AppCompatActivity {
 
 
         chooseImageButton.setOnClickListener((View v)-> openFileChooser());
+        openCameraButton.setOnClickListener((View v)-> takePhotoOnCamera());
         uploadButton.setOnClickListener(v -> {
             if (mUploadTask != null && mUploadTask.isInProgress()){
                 Toast.makeText(this, "Upload is in progress", Toast.LENGTH_SHORT).show();
@@ -86,35 +92,32 @@ public class UploadActivity extends AppCompatActivity {
         MenuItem menuItem = menu.getItem(2);
         menuItem.setChecked(true);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        bottomNavigationView.setOnNavigationItemSelectedListener(menuItem1 -> {
 
-                switch (menuItem.getItemId()){
-                    case R.id.nav_home:
-                        Intent intent1 = new Intent(UploadActivity.this,HomeActivity.class);
-                        startActivity(intent1);
-                        break;
-                    case R.id.nav_subscribe:
-                        Intent intent2 = new Intent(UploadActivity.this,SubscribeActivity.class);
-                        startActivity(intent2);
-                        break;
-                    case R.id.nav_post:
-                        Intent intent3 = new Intent(UploadActivity.this,UploadActivity.class);
-                        startActivity(intent3);
-                        break;
-                    case R.id.nav_read:
-                        Intent intent4 = new Intent(UploadActivity.this,ReadActivity.class);
-                        startActivity(intent4);
-                        break;
-                    case R.id.nav_notification:
-                        Intent intent5 = new Intent(UploadActivity.this,NotificationActivity.class);
-                        startActivity(intent5);
-                        break;
-                }
-
-                return false;
+            switch (menuItem1.getItemId()){
+                case R.id.nav_home:
+                    Intent intent1 = new Intent(UploadActivity.this,HomeActivity.class);
+                    startActivity(intent1);
+                    break;
+                case R.id.nav_subscribe:
+                    Intent intent2 = new Intent(UploadActivity.this,SubscribeActivity.class);
+                    startActivity(intent2);
+                    break;
+                case R.id.nav_post:
+                    Intent intent3 = new Intent(UploadActivity.this,UploadActivity.class);
+                    startActivity(intent3);
+                    break;
+                case R.id.nav_read:
+                    Intent intent4 = new Intent(UploadActivity.this,ReadActivity.class);
+                    startActivity(intent4);
+                    break;
+                case R.id.nav_notification:
+                    Intent intent5 = new Intent(UploadActivity.this,NotificationActivity.class);
+                    startActivity(intent5);
+                    break;
             }
+
+            return false;
         });
 
     }
@@ -123,6 +126,13 @@ public class UploadActivity extends AppCompatActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    private void takePhotoOnCamera() {
+        Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent1, CAMERA_REQUEST_CODE);
+        intent1.setType("image/*");
+
     }
 
     @Override
@@ -139,9 +149,20 @@ public class UploadActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
         }
+
+        if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            imageUri = getImageUri(photo);
+            imageView.setImageBitmap(photo);
+        }
+    }
+
+    public Uri getImageUri(Bitmap photo) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(getContentResolver(), photo, "Title", null);
+        return Uri.parse(path);
     }
 
     private String getFileExtension(Uri uri){
