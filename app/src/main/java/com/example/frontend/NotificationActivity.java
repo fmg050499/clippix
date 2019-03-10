@@ -76,8 +76,6 @@ public class NotificationActivity extends AppCompatActivity {
                         String headline = data.get("headline").toString();
                         String body = data.get("body").toString();
 
-
-
                         for (int i=0 ; i<=mSubscriptions.size(); i++){
                             if (mSubscriptions.get(i).equals(userId)){
                                 agenciesSubscribed+=userId;
