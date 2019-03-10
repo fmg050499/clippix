@@ -1,6 +1,7 @@
 package com.example.frontend;
 
 import android.content.Intent;
+import android.icu.lang.UScript;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -15,10 +16,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -37,7 +42,8 @@ public class NotificationActivity extends AppCompatActivity{
     private RecyclerView mRecyclerView;
     private NotificationAdapter mAdapter;
 
-    private List<String> mSubscriptions;
+    private List<News> mSubscriptions;
+    private List<String> mSubs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,51 +57,62 @@ public class NotificationActivity extends AppCompatActivity{
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mSubscriptions = new ArrayList<>();
+        mSubs = new ArrayList<>();
 
         mAdapter = new NotificationAdapter(NotificationActivity.this,mSubscriptions);
         mRecyclerView.setAdapter(mAdapter);
 
         textView = findViewById(R.id.notificationTextView);
-        textView.setText("hello");
+//        textView.setText("hello");
 
-        db
-                .collection("subscription")
-                .get()
-                .addOnCompleteListener((Task<QuerySnapshot> task)->{
+//
+        CollectionReference subsCollectionRef = db.collection("subs");
+//
+//
+//        Query subsQuery = subsCollectionRef
+//                .whereEqualTo("userId", authentication.getCurrentUser().getUid());
+//
+//        subsQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()){
+//                    for(QueryDocumentSnapshot document : task.getResult()){
+//                        String topics = document.get("tagName").toString();
+//                        mSubs.add(topics);
+//                    }
+//                }
+//            }
+//        });
+//
+//       db
+//                .collection("subs")
+//               .whereEqualTo("userId", authentication.getCurrentUser().getUid())
+//                .get()
+//                .addOnCompleteListener((Task<QuerySnapshot> task)->{
+//
+//                    String output ="";
+//                    for (QueryDocumentSnapshot document : task.getResult()){
+//                        Map<String, Object> data = document.getData();
+//
+//                        String topics = data.get("tagName").toString();
+//                        output += topics;
+//
+//                        mSubs.add(topics);
+//                    }
+//                    textView.setText(output);
+//                });
+//
 
-                    for (QueryDocumentSnapshot document : task.getResult()){
-                        Map<String, Object> data = document.getData();
-
-                        String userId = data.get("userId").toString();
-
-                        mSubscriptions.add(userId);
-                    }
-                });
-
-        db
-                .collection("news")
-                .get()
-                .addOnCompleteListener((Task<QuerySnapshot> task)->{
-
-                    String agenciesSubscribed = "";
-                    for (QueryDocumentSnapshot document : task.getResult()){
-                        Map<String, Object> data = document.getData();
-
-                        String userId = data.get("user_id").toString();
-                        String fileName = data.get("filename").toString();
-                        String headline = data.get("headline").toString();
-                        String body = data.get("body").toString();
 
 
-
-//                        for (int i=0 ; i<=mSubscriptions.size(); i++){
-//                            if (mSubscriptions.get(i).equals(userId)){
-//                                agenciesSubscribed+=userId;
-//                            }
-//                        }
-                    }
-                    textView.setText("hello");
-                });
+//        db
+//                .collection("news")
+//                .get()
+//                .addOnCompleteListener((Task<QuerySnapshot> task)->{
+//
+//
+//                })
+//
 
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavigation);

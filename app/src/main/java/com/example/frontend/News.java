@@ -5,11 +5,14 @@ public class News {
     String body;
     String filename;
     String userId;
+    String tagName;
 
-    public News(String headline, String body, String filename, String userId) {
+    public News(String headline, String body, String filename, String tagName, String userId) {
+
         this.headline = headline;
         this.body = body;
         this.userId = userId;
+        this.tagName = tagName;
         this.filename = filename;
     }
 

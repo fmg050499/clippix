@@ -74,16 +74,28 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 //                        String fileName = data.get("filename").toString();
 //                        String headline = data.get("headline").toString();
 //                        String body = data.get("body").toString();
+//<<<<<<< HEAD
 //
 //                        output+= document.getId()+headline+body+userId;
 //                        News news = new News (headline,body,fileName,userId);
+//=======
+//                        String tagName = data.get("tagName").toString();
+//
+//                        output+= document.getId()+headline+body+userId;
+//                        News news = new News (headline,body,fileName,tagName,userId);
+//>>>>>>> 6072a1ceb53fd15f16cb9905a08211848103910b
 //
 //                        mNews.add(news);
 //                    }
 //                    textView.setText(output);
 //                });
+//<<<<<<< HEAD
 
 
+//=======
+//
+//
+//>>>>>>> 6072a1ceb53fd15f16cb9905a08211848103910b
 
 
 //        drawer = findViewById(R.id.drawerLayout);

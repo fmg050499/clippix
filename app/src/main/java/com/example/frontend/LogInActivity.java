@@ -26,11 +26,11 @@ public class LogInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
         authentication  = FirebaseAuth.getInstance();
 
-        createAccountButton = findViewById(R.id.createAccountButton);
-        logInButton=findViewById(R.id.logInButton);
-
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
+
+        createAccountButton = findViewById(R.id.createAccountButton);
+        logInButton=findViewById(R.id.logInButton);
 
         createAccountButton.setOnClickListener((View view)->{
             Intent intent = new Intent(this, RegisterActivity.class);
@@ -40,6 +40,7 @@ public class LogInActivity extends AppCompatActivity {
         logInButton.setOnClickListener((View view)->{
             logIn();
         });
+
     }
 
     @Override
@@ -60,32 +61,30 @@ public class LogInActivity extends AppCompatActivity {
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
-        if (email.equals("")) {
-            Toast.makeText(this, "Email field is empty", Toast.LENGTH_LONG).show();
-        }else {
-            authentication.signInWithEmailAndPassword(email,password)
-                    .addOnCompleteListener((Task<AuthResult> task) -> {
-                        if(task.isSuccessful()){
-                            Toast.makeText(this,"Successful",Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(this, HomeActivity.class);
-                            startActivity(intent);
-
-                        }else {
-                            Toast.makeText(this,"Failure",Toast.LENGTH_LONG).show();
-                        }
-                    });
+        if (email.isEmpty()) {
+            emailEditText.setError("Email is required");
+            emailEditText.requestFocus();
+            return;
         }
-        authentication.signInWithEmailAndPassword(email,password)
-                .addOnCompleteListener((Task<AuthResult> task) -> {
-                    if(task.isSuccessful()){
-                        Toast.makeText(this,"Successful",Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(this, HomeActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
 
-                    }else {
-                        Toast.makeText(this,"Failure",Toast.LENGTH_LONG).show();
-                    }
-                });
+        if (password.isEmpty()) {
+            passwordEditText.setError("Password is required");
+            passwordEditText.requestFocus();
+            return;
+
+        }else {
+                authentication.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener((Task<AuthResult> task) -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(this, "Successful", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(this, HomeActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+
+                            } else {
+                                Toast.makeText(this, "Failure", Toast.LENGTH_LONG).show();
+                            }
+                        });
+            }
     }
 }

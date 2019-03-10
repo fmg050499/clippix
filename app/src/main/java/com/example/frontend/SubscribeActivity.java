@@ -79,8 +79,9 @@ public class SubscribeActivity extends AppCompatActivity implements NavigationVi
 
 
                         String agency = data.get("name").toString();
+                        String userId = data.get("userId").toString();
                         output+= document.getId()+agency;
-                        Subscription subscription = new Subscription(agency);
+                        Subscription subscription = new Subscription(agency,userId);
 
                         mSubscription.add(subscription);
 

@@ -5,90 +5,84 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegisterActivity"
-    android:background="@color/design_default_color_primary">
+    android:background="@color/colorDarkBlue">
 
 
     <EditText
-        android:id="@+id/firstNameEditText"
+        android:id="@+id/usernameEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_above="@+id/lastNameEditText"
-        android:ems="10"
-        android:hint="First Name"
-        android:layout_margin="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:padding="25dp"
-        android:background="@drawable/input_background"
-        android:inputType="textEmailAddress" />
-
-    <EditText
-        android:id="@+id/lastNameEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_centerInParent="true"
         android:ems="10"
-        android:hint="Last Name"
-        android:layout_margin="5dp"
+        android:hint="user name"
+        android:layout_margin="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:padding="25dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:background="@drawable/input_background"
         android:inputType="textEmailAddress" />
-
 
     <EditText
         android:id="@+id/emailEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@id/usernameEditText"
         android:layout_centerInParent="true"
-        android:layout_below="@+id/lastNameEditText"
         android:ems="10"
         android:hint="email"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:padding="25dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:background="@drawable/input_background"
         android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_centerInParent="true"
         android:layout_below="@+id/emailEditText"
         android:ems="10"
         android:hint="password"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:background="@drawable/input_background"
         android:inputType="textPersonName|textPassword" />
 
     <Button
         android:id="@+id/signUpButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/passwordEditText"
-        android:textSize="20dp"
-        android:text="Sign Up"
-        android:layout_margin="5dp"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/passwordEditText"
+        android:ems="10"
+        android:text="create account"
+        android:layout_margin="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:background="@drawable/input_background" />
-
+    <Button
+        android:id="@+id/logInButton"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/signUpButton"
+        android:ems="10"
+        android:text="already have an account"
+        android:layout_margin="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@drawable/input_background" />
 
 
 </RelativeLayout>
