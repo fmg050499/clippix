@@ -1,6 +1,7 @@
 package com.example.frontend;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
@@ -20,7 +21,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class SubscribeAdapter extends RecyclerView.Adapter<SubscribeAdapter.ViewHolder> {
+    public SharedPreferences sharedPreferences;
     private StorageReference storageRefTemp;
     private Context mContext;
     private List<Subscription> mSubscription;
@@ -44,6 +48,38 @@ public class SubscribeAdapter extends RecyclerView.Adapter<SubscribeAdapter.View
 
         Subscription subscriptionCurrent = mSubscription.get(position);
         holder.headlineTextView.setText(subscriptionCurrent.getSubscription());
+
+
+//        holder.toggleButton.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//
+//                if((holder.toggleButton.isChecked())) {
+//                    SharedPreferences.Editor editor = sharedPreferences.edit();
+//                    editor.putBoolean("tgpref", true); // value to store
+//                    editor.commit();
+//                }
+//                else
+//                {
+//                    SharedPreferences.Editor editor = sharedPreferences.edit();
+//                    editor.putBoolean("tgpref", false); // value to store
+//                    editor.commit();
+//                }
+//            }
+//        });
+//
+//        SharedPreferences sharedPreferences = getS(MODE_PRIVATE);
+//        boolean tgpref = sharedPreferences.getBoolean("tgpref", true);  //default is true
+//        if (tgpref = true) //if (tgpref) may be enough, not sure
+//        {
+//            tg.setChecked(true);
+//        }
+//        else
+//        {
+//            tg.setChecked(false);
+//        }
 
         holder.toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

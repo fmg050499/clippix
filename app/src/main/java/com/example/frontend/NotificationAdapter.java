@@ -12,19 +12,21 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
+//amo ni ang ma connect sang list mo sa lay out mo
+
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
     private StorageReference storageRefTemp;
     private Context mContext;
-    private List<Subscription> mSubscription;
+    private List<String> mSubscription;
 
-    public NotificationAdapter(Context context, List<Subscription> subscriptions){
+    public NotificationAdapter(Context context, List<String> subscriptions){
         mContext = context;
         mSubscription = subscriptions;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.subscribe_item,parent,false);
+        View v = LayoutInflater.from(mContext).inflate(R.layout.notification_item,parent,false);
         return  new ViewHolder(v);
     }
 
@@ -33,8 +35,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storageRefTemp = storage.getReference();
 
-        Subscription subscriptionCurrent = mSubscription.get(position);
-        holder.headlineTextView.setText(subscriptionCurrent.getSubscription());
+        String subscriptionCurrent = mSubscription.get(position);
+        holder.headlineTextView.setText(subscriptionCurrent);
 
 
     }
