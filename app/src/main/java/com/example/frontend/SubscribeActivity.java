@@ -28,19 +28,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class SubscribeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class SubscribeActivity extends AppCompatActivity{
     FirebaseAuth authentication;
     FirebaseFirestore db;
 
-
     TextView textView;
-
-    private DrawerLayout drawer;
 
     private RecyclerView mRecyclerView;
     private SubscribeAdapter mAdapter;
 
-    private List<Subscription> mSubscription;
+    private List<Subscriptions> mSubscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +58,8 @@ public class SubscribeActivity extends AppCompatActivity implements NavigationVi
         mAdapter.setOnItemClickListener(new SubscribeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Subscription subscription =mSubscription.get(position);
-                Toast.makeText(SubscribeActivity.this, ""+subscription.getSubscription(), Toast.LENGTH_SHORT).show();
+                Subscriptions subscription =mSubscription.get(position);
+                Toast.makeText(SubscribeActivity.this, ""+subscription.getTopic(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -77,11 +74,11 @@ public class SubscribeActivity extends AppCompatActivity implements NavigationVi
                     for (QueryDocumentSnapshot document : task.getResult()){
                         Map<String, Object> data = document.getData();
 
-
                         String agency = data.get("name").toString();
                         String userId = data.get("userId").toString();
+
                         output+= document.getId()+agency;
-                        Subscription subscription = new Subscription(agency,userId);
+                        Subscriptions subscription = new Subscriptions(agency,userId);
 
                         mSubscription.add(subscription);
 
@@ -90,81 +87,36 @@ public class SubscribeActivity extends AppCompatActivity implements NavigationVi
                 });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
-
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(0);
         menuItem.setChecked(true);
+        bottomNavigationView.setOnNavigationItemSelectedListener(menuItem1 -> {
 
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-                switch (menuItem.getItemId()){
-                    case R.id.nav_home:
-                        Intent intent1 = new Intent(SubscribeActivity.this,HomeActivity.class);
-                        startActivity(intent1);
-                        break;
-                    case R.id.nav_subscribe:
-                        Intent intent2 = new Intent(SubscribeActivity.this,SubscribeActivity.class);
-                        startActivity(intent2);
-                        break;
-                    case R.id.nav_post:
-                        Intent intent3 = new Intent(SubscribeActivity.this,UploadActivity.class);
-                        startActivity(intent3);
-                        break;
-                    case R.id.nav_read:
-                        Intent intent4 = new Intent(SubscribeActivity.this,ReadActivity.class);
-                        startActivity(intent4);
-                        break;
-                    case R.id.nav_notification:
-                        Intent intent5 = new Intent(SubscribeActivity.this,NotificationActivity.class);
-                        startActivity(intent5);
-                        break;
-                }
-
-                return false;
+            switch (menuItem1.getItemId()){
+                case R.id.nav_home:
+                    Intent intent1 = new Intent(SubscribeActivity.this,HomeActivity.class);
+                    startActivity(intent1);
+                    break;
+                case R.id.nav_subscribe:
+                    Intent intent2 = new Intent(SubscribeActivity.this,SubscribeActivity.class);
+                    startActivity(intent2);
+                    break;
+                case R.id.nav_post:
+                    Intent intent3 = new Intent(SubscribeActivity.this,UploadActivity.class);
+                    startActivity(intent3);
+                    break;
+                case R.id.nav_read:
+                    Intent intent4 = new Intent(SubscribeActivity.this,ReadActivity.class);
+                    startActivity(intent4);
+                    break;
+                case R.id.nav_notification:
+                    Intent intent5 = new Intent(SubscribeActivity.this,NotificationActivity.class);
+                    startActivity(intent5);
+                    break;
             }
+
+            return false;
         });
     }
 
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        return false;
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)){
-            drawer.closeDrawer(GravityCompat.START);
-        }else {
-            super.onBackPressed();
-        }
-    }
-
-//    public void subscribe(){
-//
-//        FirebaseMessaging.getInstance().subscribeToTopic(topic)
-//                .addOnCompleteListener((Task <Void> task)->{
-//                    if(task.isSuccessful()){
-//                        Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
-//                    }else{
-//                        Toast.makeText(this, "failure", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//
-//
-//    }
-//    public void unsubscribe(){
-//
-//        FirebaseMessaging.getInstance().unsubscribeFromTopic(topic)
-//                .addOnCompleteListener((task)->{
-//                    if(task.isSuccessful()){
-//                        Toast.makeText(this, "Unsubscribed", Toast.LENGTH_SHORT).show();
-//                    }else{
-//                        Toast.makeText(this, "Unsubscription Failed", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//    }
 }

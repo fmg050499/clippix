@@ -41,6 +41,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
         News newsCurrent = mNews.get(position);
         holder.headlineTextView.setText(newsCurrent.getHeadline());
+        holder.usernameTextView.setText(newsCurrent.getUserId());
+        holder.tagsTextView.setText(newsCurrent.getTags());
+        holder.timeTextView.setText(newsCurrent.getTime());
 
         try {
             StorageReference tempRef = storageRefTemp.child("news").child(newsCurrent.getFilename());
@@ -64,6 +67,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     public class ImageViewHolder extends RecyclerView.ViewHolder{
         public TextView headlineTextView;
+        public TextView usernameTextView;
+        public TextView tagsTextView;
+        public TextView timeTextView;
         public ImageView homeImageView;
 
         public ImageViewHolder(View itemView) {
@@ -71,6 +77,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
             headlineTextView = itemView.findViewById(R.id.headlineTextView);
             homeImageView = itemView.findViewById(R.id.homeImageView);
+            usernameTextView = itemView.findViewById(R.id.usernameTextView);
+            tagsTextView = itemView.findViewById(R.id.tagsTextView);
+            timeTextView = itemView.findViewById(R.id.timeTextView);
         }
     }
 }

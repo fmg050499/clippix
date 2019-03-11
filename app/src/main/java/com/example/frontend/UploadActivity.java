@@ -34,6 +34,8 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URI;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,7 +49,7 @@ public class UploadActivity extends AppCompatActivity {
 
     private Button uploadButton, chooseImageButton, openCameraButton;
 
-    private EditText headlineEditText,bodyEditText;
+    private EditText headlineEditText,bodyEditText,tagsEditText;
 
     private ImageView imageView;
     private ProgressBar progressBar;
@@ -65,10 +67,11 @@ public class UploadActivity extends AppCompatActivity {
 
         uploadButton = findViewById(R.id.uploadButton);
         chooseImageButton = findViewById(R.id.chooseImageButton);
-        openCameraButton = findViewById(R.id.openCameraButton);
+//        openCameraButton = findViewById(R.id.openCameraButton);
 
         headlineEditText = findViewById(R.id.headlineEditText);
         bodyEditText= findViewById(R.id.bodyEditText);
+        tagsEditText=findViewById(R.id.tagsEditText);
 
         imageView = findViewById(R.id.imageView);
         authentication = FirebaseAuth.getInstance();
@@ -77,7 +80,7 @@ public class UploadActivity extends AppCompatActivity {
 
 
         chooseImageButton.setOnClickListener((View v)-> openFileChooser());
-        openCameraButton.setOnClickListener((View v)-> takePhotoOnCamera());
+//        openCameraButton.setOnClickListener((View v)-> takePhotoOnCamera());
         uploadButton.setOnClickListener(v -> {
             if (mUploadTask != null && mUploadTask.isInProgress()){
                 Toast.makeText(this, "Upload is in progress", Toast.LENGTH_SHORT).show();
@@ -128,12 +131,12 @@ public class UploadActivity extends AppCompatActivity {
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
-    private void takePhotoOnCamera() {
-        Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent1, CAMERA_REQUEST_CODE);
-        intent1.setType("image/*");
-
-    }
+//    private void takePhotoOnCamera() {
+//        Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        startActivityForResult(intent1, CAMERA_REQUEST_CODE);
+//        intent1.setType("image/*");
+//
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -151,11 +154,11 @@ public class UploadActivity extends AppCompatActivity {
             }
         }
 
-        if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
-            //imageUri = getImageUri(photo);
-            imageView.setImageBitmap(photo);
-        }
+//        if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
+//            Bitmap photo = (Bitmap) data.getExtras().get("data");
+//            //imageUri = getImageUri(photo);
+//            imageView.setImageBitmap(photo);
+//        }
     }
 
     public Uri getImageUri(Context inContext, Bitmap photo) {
@@ -192,14 +195,19 @@ public class UploadActivity extends AppCompatActivity {
 
                         String headline = headlineEditText.getText().toString();
                         String body = bodyEditText.getText().toString();
+                        String tags = tagsEditText.getText().toString();
                         String userId = authentication.getCurrentUser().getUid();
+                        Date currentTime = Calendar.getInstance().getTime();
+                        String time = currentTime.toString();
 
 
                         Map<String, Object> news = new HashMap<>();
-                        news.put("user_id", userId);
                         news.put("headline",headline);
                         news.put("body", body);
                         news.put("filename",fileName);
+                        news.put("tags",tags);
+                        news.put("time",time);
+                        news.put("user_id", userId);
 
                         db.collection("news")
                                 .add(news)

@@ -42,7 +42,7 @@ public class NotificationActivity extends AppCompatActivity{
     private RecyclerView mRecyclerView;
     private NotificationAdapter mAdapter;
 
-    private List<News> mSubscriptions;
+    private List<News> mReads;
     private List<String> mSubs;
 
     @Override
@@ -56,17 +56,16 @@ public class NotificationActivity extends AppCompatActivity{
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mSubscriptions = new ArrayList<>();
+        mReads = new ArrayList<>();
         mSubs = new ArrayList<>();
 
-        mAdapter = new NotificationAdapter(NotificationActivity.this,mSubscriptions);
+        mAdapter = new NotificationAdapter(NotificationActivity.this,mReads);
         mRecyclerView.setAdapter(mAdapter);
 
         textView = findViewById(R.id.notificationTextView);
-//        textView.setText("hello");
 
 //
-        CollectionReference subsCollectionRef = db.collection("subs");
+//        CollectionReference subsCollectionRef = db.collection("subs");
 //
 //
 //        Query subsQuery = subsCollectionRef
@@ -116,11 +115,9 @@ public class NotificationActivity extends AppCompatActivity{
 
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavigation);
-
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(0);
         menuItem.setChecked(true);
-
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

@@ -2,35 +2,28 @@ package com.example.frontend;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class SubscribeAdapter extends RecyclerView.Adapter<SubscribeAdapter.ViewHolder> {
     public SharedPreferences sharedPreferences;
     private StorageReference storageRefTemp;
     private Context mContext;
-    private List<Subscription> mSubscription;
+    private List<Subscriptions> mSubscription;
     private OnItemClickListener mListener;
 
-    public SubscribeAdapter(Context context,List<Subscription> subscriptions){
+    public SubscribeAdapter(Context context,List<Subscriptions> subscriptions){
         mContext = context;
         mSubscription = subscriptions;
     }
@@ -46,8 +39,8 @@ public class SubscribeAdapter extends RecyclerView.Adapter<SubscribeAdapter.View
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storageRefTemp = storage.getReference();
 
-        Subscription subscriptionCurrent = mSubscription.get(position);
-        holder.headlineTextView.setText(subscriptionCurrent.getSubscription());
+        Subscriptions subscriptionCurrent = mSubscription.get(position);
+        holder.headlineTextView.setText(subscriptionCurrent.getTopic());
 
 
 //        holder.toggleButton.setOnClickListener(new View.OnClickListener()
@@ -84,12 +77,15 @@ public class SubscribeAdapter extends RecyclerView.Adapter<SubscribeAdapter.View
         holder.toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                String topic = subscriptionCurrent.getSubscription();
-                Subscribe subs = new Subscribe();
+                FirebaseAuth auth;
+                auth = FirebaseAuth.getInstance();
+
+                String topic = subscriptionCurrent.getTopic();
+                Subscriptions subscription = new Subscriptions (topic,auth.getCurrentUser().getUid());
                 if(isChecked){
-                    subs.subscribe(topic);
+                    subscription.subscribe();
                 }else{
-                    subs.unsubscribe(topic);
+                    subscription.unsubscribe();
                 }
             }
         });

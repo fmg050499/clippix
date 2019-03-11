@@ -11,12 +11,14 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Subscribe {
+public class Subscriptions {
     String topic;
+    String userId;
 
-//    public Subscribe(String topic) {
-//        this.topic = topic;
-//    }
+    public Subscriptions(String topic,String userId) {
+        this.topic = topic;
+        this.userId = userId;
+    }
 
     public String getTopic() {
         return topic;
@@ -26,24 +28,20 @@ public class Subscribe {
         this.topic = topic;
     }
 
-    public void subscribe(String topic ){
+    public void subscribe(){
         FirebaseMessaging.getInstance().subscribeToTopic(topic);
-
         FirebaseFirestore db;
-        FirebaseAuth auth;
-        auth = FirebaseAuth.getInstance();
-
         db = FirebaseFirestore.getInstance();
 
         Map<String, Object> subs = new HashMap<>();
         subs.put("subs", topic);
-        subs.put("userId",auth.getUid());
+        subs.put("userId",userId);
 
-        db.collection("subs")
+        db.collection("subscribers")
                 .add(subs);
     }
 
-    public void unsubscribe(String topic){
+    public void unsubscribe(){
         FirebaseMessaging.getInstance().unsubscribeFromTopic(topic);
     }
 }

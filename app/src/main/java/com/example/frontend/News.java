@@ -5,15 +5,17 @@ public class News {
     String body;
     String filename;
     String userId;
-    String tagName;
+    String tags;
+    String time;
 
-    public News(String headline, String body, String filename, String tagName, String userId) {
+    public News(String headline, String body, String filename, String tags, String time, String userId) {
 
         this.headline = headline;
         this.body = body;
         this.userId = userId;
-        this.tagName = tagName;
+        this.tags = tags;
         this.filename = filename;
+        this.time=time;
     }
 
     public String getHeadline() {
@@ -38,5 +40,29 @@ public class News {
 
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }
