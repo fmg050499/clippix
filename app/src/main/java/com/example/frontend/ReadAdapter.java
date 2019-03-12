@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -20,20 +19,19 @@ import java.util.List;
 
 //amo ni ang ma connect sang list mo sa lay out mo
 
-public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
+public class ReadAdapter extends RecyclerView.Adapter<ReadAdapter.ViewHolder> {
     private StorageReference storageRefTemp;
     private Context mContext;
     private List<News> mSubscription;
-    private SubscribeAdapter.OnItemClickListener mListener;
 
-    public NotificationAdapter(Context context, List<News> subscriptions){
+    public ReadAdapter(Context context, List<News> subscriptions){
         mContext = context;
         mSubscription = subscriptions;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.notification_item,parent,false);
+        View v = LayoutInflater.from(mContext).inflate(R.layout.read_item,parent,false);
         return  new ViewHolder(v);
     }
 
@@ -43,7 +41,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         storageRefTemp = storage.getReference();
 
         News subscriptionCurrent = mSubscription.get(position);
-        holder.headlineTextView.setText(subscriptionCurrent.headline);
+        holder.headlineTextView.setText(subscriptionCurrent.getHeadline());
         holder.usernameTextView.setText(subscriptionCurrent.getUserId());
         holder.tagsTextView.setText(subscriptionCurrent.getTags());
         holder.timeTextView.setText(subscriptionCurrent.getTime());
@@ -69,14 +67,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         return mSubscription.size();
     }
 
-    public interface onItemClickListener {
-        void onItemClick(int position);
-    }
-
-    public void setOnItemClickListener(SubscribeAdapter.OnItemClickListener listener) {
-        mListener = listener;
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView headlineTextView;
         public TextView usernameTextView;
@@ -84,41 +74,18 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         public TextView timeTextView;
         public ImageView homeImageView;
 
-//        public ViewHolder(View itemView, SubscribeAdapter.OnItemClickListener listener) {
-//            super(itemView);
-//
-//            headlineTextView = itemView.findViewById(R.id.headlineTextView);
-//            toggleButton = itemView.findViewById(R.id.toggleButton);
-//
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (listener != null) {
-//                        int position = getAdapterPosition();
-//                        if (position != RecyclerView.NO_POSITION) {
-//                            listener.onItemClick(position);
-//                        }
-//                    }
-//                }
-//            });
+
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            headlineTextView = itemView.findViewById(R.id.headlineTextView);
-            homeImageView = itemView.findViewById(R.id.notificationImageView);
-            usernameTextView = itemView.findViewById(R.id.usernameTextView);
-            tagsTextView = itemView.findViewById(R.id.tagsTextView);
-            timeTextView = itemView.findViewById(R.id.timeTextView);
-
-//            itemView.setOnClickListener(new onItemClickListener() {
-//
-//            });
+            headlineTextView = itemView.findViewById(R.id.readHeadlineTextView);
+            homeImageView = itemView.findViewById(R.id.readImageView);
+            usernameTextView = itemView.findViewById(R.id.readUsernameTextView);
+            tagsTextView = itemView.findViewById(R.id.readTagsTextView);
+            timeTextView = itemView.findViewById(R.id.readTimeTextView);
 
         }
     }
-
-
-
 
 }

@@ -28,13 +28,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class HomeActivity extends AppCompatActivity{
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     FirebaseAuth authentication;
     FirebaseFirestore db;
 
     TextView textView;
 
-//    private DrawerLayout drawer;
+    private DrawerLayout drawer;
 
     private RecyclerView mRecyclerView;
     private ImageAdapter mAdapter;
@@ -56,18 +56,33 @@ public class HomeActivity extends AppCompatActivity{
 
         mNews = new ArrayList<>();
 
-        mAdapter = new ImageAdapter(HomeActivity.this,mNews);
+        mAdapter = new ImageAdapter(HomeActivity.this, mNews);
         mRecyclerView.setAdapter(mAdapter);
 
         textView = findViewById(R.id.textView);
 
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawer = findViewById(R.id.drawerLayout);
+        NavigationView navigationView = findViewById(R.id.viewNav);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigationDrawerOpen,
+                R.string.navigationDrawerClose);
+        DrawerLayout.DrawerListener drawerListener = null;
+        drawer.addDrawerListener(drawerListener);
+        toggle.syncState();
+
+
         db
                 .collection("news")
                 .get()
-                .addOnCompleteListener((Task<QuerySnapshot> task)->{
+                .addOnCompleteListener((Task<QuerySnapshot> task) -> {
 
-                    String output ="";
-                    for (QueryDocumentSnapshot document : task.getResult()){
+                    String output = "fjkajgalgalk";
+                    for (QueryDocumentSnapshot document : task.getResult()) {
                         Map<String, Object> data = document.getData();
 
                         String fileName = data.get("filename").toString();
@@ -77,12 +92,13 @@ public class HomeActivity extends AppCompatActivity{
                         String time = data.get("time").toString();
                         String userId = data.get("user_id").toString();
 
-                        output+= document.getId()+headline+body+userId;
-                        News news = new News (headline,body,fileName,tags,time,userId);
+                        News news = new News(headline, body, fileName, tags, time, userId);
 
                         mNews.add(news);
+                        mAdapter = new ImageAdapter(HomeActivity.this, mNews);
+                        mRecyclerView.setAdapter(mAdapter);
                     }
-                    textView.setText(output);
+                    //textView.setText(output);
                 });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
@@ -91,33 +107,33 @@ public class HomeActivity extends AppCompatActivity{
         MenuItem menuItem = menu.getItem(0);
         menuItem.setChecked(true);
 
-        logOutButton=findViewById(R.id.logOutButton);
+        logOutButton = findViewById(R.id.logOutButton);
 
-        logOutButton.setOnClickListener((View view)->{
+        logOutButton.setOnClickListener((View view) -> {
             logOut();
         });
 
         bottomNavigationView.setOnNavigationItemSelectedListener(menuItem1 -> {
 
-            switch (menuItem1.getItemId()){
+            switch (menuItem1.getItemId()) {
                 case R.id.nav_home:
-                    Intent intent1 = new Intent(HomeActivity.this,HomeActivity.class);
+                    Intent intent1 = new Intent(HomeActivity.this, HomeActivity.class);
                     startActivity(intent1);
                     break;
                 case R.id.nav_subscribe:
-                    Intent intent2 = new Intent(HomeActivity.this,SubscribeActivity.class);
+                    Intent intent2 = new Intent(HomeActivity.this, SubscribeActivity.class);
                     startActivity(intent2);
                     break;
                 case R.id.nav_post:
-                    Intent intent3 = new Intent(HomeActivity.this,UploadActivity.class);
+                    Intent intent3 = new Intent(HomeActivity.this, UploadActivity.class);
                     startActivity(intent3);
                     break;
                 case R.id.nav_read:
-                    Intent intent4 = new Intent(HomeActivity.this,ReadActivity.class);
+                    Intent intent4 = new Intent(HomeActivity.this, ReadActivity.class);
                     startActivity(intent4);
                     break;
                 case R.id.nav_notification:
-                    Intent intent5 = new Intent(HomeActivity .this,NotificationActivity.class);
+                    Intent intent5 = new Intent(HomeActivity.this, NotificationActivity.class);
                     startActivity(intent5);
                     break;
             }
@@ -128,41 +144,40 @@ public class HomeActivity extends AppCompatActivity{
 
     private void logOut() {
         FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(this,LogInActivity.class);
+        Intent intent = new Intent(this, LogInActivity.class);
         startActivity(intent);
     }
 
-//    @Override
-//    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-//        return false;
-//    }
-//
-//    @Override
-//    public void onBackPressed() {
-//        if (drawer.isDrawerOpen(GravityCompat.START)){
-//            drawer.closeDrawer(GravityCompat.START);
-//        }else {
-//            super.onBackPressed();
-//        }
-//
-//    }
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.nav_message:
+                Intent intent = new Intent(HomeActivity.this, SubscribeActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.nav_profile:
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,
+//                        new ProfileFragment()).commit();
+                break;
+            case R.id.nav_settings:
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,
+//                        new SettingsFragment()).commit();
+                break;
+        }
+
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+        super.onBackPressed();
+    }
+
 }
-
-//        drawer = findViewById(R.id.drawerLayout);
-//        Toolbar toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//
-//        NavigationView navigationView = findViewById(R.id.viewNav);
-//        navigationView.setNavigationItemSelectedListener(this);
-//
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigationDrawerOpen,
-//                R.string.navigationDrawerClose);
-//        DrawerLayout.DrawerListener drawerListener = null;
-//        drawer.addDrawerListener(drawerListener);
-//        toggle.syncState();
-
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,
-//                    new MessageFragment()).commit();
-//            navigationView.setCheckedItem(R.id.nav_message);
-//        }

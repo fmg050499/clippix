@@ -11,7 +11,7 @@
         android:background="@color/colorWhite">
 
         <TextView
-            android:id="@+id/headlineTextView"
+            android:id="@+id/readHeadlineTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -21,7 +21,7 @@
             android:textColor="@android:color/black"
             android:textSize="20sp" />
         <TextView
-            android:id="@+id/usernameTextView"
+            android:id="@+id/readUsernameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -31,7 +31,7 @@
             android:textColor="@android:color/black"
             android:textSize="20sp" />
         <TextView
-            android:id="@+id/tagsTextView"
+            android:id="@+id/readTagsTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -41,7 +41,7 @@
             android:textColor="@android:color/black"
             android:textSize="20sp" />
         <TextView
-            android:id="@+id/timeTextView"
+            android:id="@+id/readTimeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -52,7 +52,7 @@
             android:textSize="20sp" />
 
         <ImageView
-            android:id="@+id/notificationImageView"
+            android:id="@+id/readImageView"
             android:layout_width="match_parent"
             android:layout_height="200dp" />
 

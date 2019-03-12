@@ -37,13 +37,11 @@ public class NotificationActivity extends AppCompatActivity{
 
     TextView textView;
 
-    private DrawerLayout drawer;
-
     private RecyclerView mRecyclerView;
     private NotificationAdapter mAdapter;
 
-    private List<News> mReads;
-    private List<String> mSubs;
+    private List<News> newsSubscribed;
+    private List<String> currentUsersSubscriptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,67 +54,61 @@ public class NotificationActivity extends AppCompatActivity{
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mReads = new ArrayList<>();
-        mSubs = new ArrayList<>();
+        currentUsersSubscriptions = new ArrayList<>();
+        newsSubscribed = new ArrayList<>();
 
-        mAdapter = new NotificationAdapter(NotificationActivity.this,mReads);
+        mAdapter = new NotificationAdapter(NotificationActivity.this,newsSubscribed);
         mRecyclerView.setAdapter(mAdapter);
 
         textView = findViewById(R.id.notificationTextView);
+        //current users subscriptions
+        db
+                .collection("subscribers")
+                .whereEqualTo("userId", authentication.getCurrentUser().getUid())
+                .get()
+                .addOnCompleteListener((Task<QuerySnapshot> task)->{
+                    String output ="";
+                    for (QueryDocumentSnapshot document : task.getResult()){
+                        Map<String, Object> data = document.getData();
 
-//
-//        CollectionReference subsCollectionRef = db.collection("subs");
-//
-//
-//        Query subsQuery = subsCollectionRef
-//                .whereEqualTo("userId", authentication.getCurrentUser().getUid());
-//
-//        subsQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if (task.isSuccessful()){
-//                    for(QueryDocumentSnapshot document : task.getResult()){
-//                        String topics = document.get("tagName").toString();
-//                        mSubs.add(topics);
-//                    }
-//                }
-//            }
-//        });
-//
-//       db
-//                .collection("subs")
-//               .whereEqualTo("userId", authentication.getCurrentUser().getUid())
-//                .get()
-//                .addOnCompleteListener((Task<QuerySnapshot> task)->{
-//
-//                    String output ="";
-//                    for (QueryDocumentSnapshot document : task.getResult()){
-//                        Map<String, Object> data = document.getData();
-//
-//                        String topics = data.get("tagName").toString();
-//                        output += topics;
-//
-//                        mSubs.add(topics);
-//                    }
-//                    textView.setText(output);
-//                });
-//
+                        String subscriptions = data.get("subs").toString();
 
+                        currentUsersSubscriptions.add(subscriptions);
+                    }
+                });
 
+       db
+               .collection("news")
+               .get()
+               .addOnCompleteListener((Task<QuerySnapshot> task)->{
 
-//        db
-//                .collection("news")
-//                .get()
-//                .addOnCompleteListener((Task<QuerySnapshot> task)->{
-//
-//
-//                })
-//
+                   String output ="";
+                   for (QueryDocumentSnapshot document : task.getResult()){
+                        for(String topic:currentUsersSubscriptions){
+                            Map<String, Object> data = document.getData();
+                            if(topic.equals(data.get("tags").toString())){
+                                String fileName = data.get("filename").toString();
+                                String headline = data.get("headline").toString();
+                                String body = data.get("body").toString();
+                                String tags = data.get("tags").toString();
+                                String time = data.get("time").toString();
+                                String userId = data.get("user_id").toString();
 
+                                output+= document.getId()+headline+body+userId;
+                                News news = new News (headline,body,fileName,tags,time,userId);
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavigation);
+                                newsSubscribed.add(news);
+                                mAdapter = new NotificationAdapter(NotificationActivity.this,newsSubscribed);
+                                mRecyclerView.setAdapter(mAdapter);
+                            }
+                        }
+                   }
+                   //textView.setText(output);
+               });
+
+                    BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavigation);
         Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem(0);
+        MenuItem menuItem = menu.getItem(4);
         menuItem.setChecked(true);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -124,7 +116,7 @@ public class NotificationActivity extends AppCompatActivity{
 
                 switch (menuItem.getItemId()){
                     case R.id.nav_home:
-                        Intent intent1 = new Intent(NotificationActivity.this, NotificationActivity.class);
+                        Intent intent1 = new Intent(NotificationActivity.this,HomeActivity.class);
                         startActivity(intent1);
                         break;
                     case R.id.nav_subscribe:

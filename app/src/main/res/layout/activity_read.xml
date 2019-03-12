@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ReadActivity"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorBlueUpload">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,34 +15,38 @@
             android:id="@+id/readRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="700dp"
-            android:background="@color/colorAccent"/>
+            android:background="@color/colorBlueUpload"/>
 
         <TextView
             android:id="@+id/readTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minLines="5" />
+            android:minLines="5"
+            android:textSize="10dp"/>
 
     </RelativeLayout>
 
-
-    <android.support.design.widget.AppBarLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
+        android:layout_height="match_parent">
 
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/bottomNavigation"
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            app:menu="@menu/bottom_navigation_bar"
-            app:itemIconTint="@color/colorGrey"
-            android:background="@drawable/white_grey_border_top"
-            app:itemTextColor="@color/colorGrey"/>
+            android:layout_gravity="bottom">
 
-    </android.support.design.widget.AppBarLayout>
+            <android.support.design.widget.BottomNavigationView
+                android:id="@+id/bottomNavigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                app:menu="@menu/bottom_navigation_bar"
+                app:itemIconTint="@color/colorGrey"
+                android:background="@drawable/white_grey_border_top"
+                app:itemTextColor="@color/colorGrey"/>
 
+        </android.support.design.widget.AppBarLayout>
 
+    </android.support.design.widget.CoordinatorLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

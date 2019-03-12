@@ -6,6 +6,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.HashMap;
@@ -42,6 +44,25 @@ public class Subscriptions {
     }
 
     public void unsubscribe(){
+
         FirebaseMessaging.getInstance().unsubscribeFromTopic(topic);
+
+//        FirebaseFirestore db;
+//        db = FirebaseFirestore.getInstance();
+
+//        db
+//                .collection("accounts")
+//                .get()
+//                .addOnCompleteListener((Task<QuerySnapshot> task)->{
+//
+//                    String output = "";
+//                    for (QueryDocumentSnapshot document : task.getResult()){
+//                        output+= document.getId();
+//                        Map<String, Object> data = document.getData();
+//                        output+=" : "+ data.get("email")+" uwu "+ data.get("passwords");
+//                        output+= "\n";
+//                    }
+//                    textView.setText(output);
+//                });
     }
 }

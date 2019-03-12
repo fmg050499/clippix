@@ -20,12 +20,12 @@ public class SubscribeAdapter extends RecyclerView.Adapter<SubscribeAdapter.View
     public SharedPreferences sharedPreferences;
     private StorageReference storageRefTemp;
     private Context mContext;
-    private List<Subscriptions> mSubscription;
+    private List<Agency> mAgencies;
     private OnItemClickListener mListener;
 
-    public SubscribeAdapter(Context context,List<Subscriptions> subscriptions){
+    public SubscribeAdapter(Context context,List<Agency> agency){
         mContext = context;
-        mSubscription = subscriptions;
+        mAgencies= agency;
     }
 
     @Override
@@ -39,8 +39,8 @@ public class SubscribeAdapter extends RecyclerView.Adapter<SubscribeAdapter.View
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storageRefTemp = storage.getReference();
 
-        Subscriptions subscriptionCurrent = mSubscription.get(position);
-        holder.headlineTextView.setText(subscriptionCurrent.getTopic());
+        Agency agencyCurrent = mAgencies.get(position);
+        holder.headlineTextView.setText(agencyCurrent.getUsername());
 
 
 //        holder.toggleButton.setOnClickListener(new View.OnClickListener()
@@ -80,7 +80,8 @@ public class SubscribeAdapter extends RecyclerView.Adapter<SubscribeAdapter.View
                 FirebaseAuth auth;
                 auth = FirebaseAuth.getInstance();
 
-                String topic = subscriptionCurrent.getTopic();
+                String topic = agencyCurrent.getUsername();
+
                 Subscriptions subscription = new Subscriptions (topic,auth.getCurrentUser().getUid());
                 if(isChecked){
                     subscription.subscribe();
@@ -95,7 +96,7 @@ public class SubscribeAdapter extends RecyclerView.Adapter<SubscribeAdapter.View
 
     @Override
     public int getItemCount() {
-        return mSubscription.size();
+        return mAgencies.size();
     }
 
     public interface OnItemClickListener{

@@ -37,11 +37,12 @@ public class SubscribeActivity extends AppCompatActivity{
     private RecyclerView mRecyclerView;
     private SubscribeAdapter mAdapter;
 
-    private List<Subscriptions> mSubscription;
+    private List<Agency> agencies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Toast.makeText(SubscribeActivity.this,"this is a test",Toast.LENGTH_LONG).show();
         setContentView(R.layout.activity_subscribe);
         authentication = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -50,19 +51,20 @@ public class SubscribeActivity extends AppCompatActivity{
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mSubscription = new ArrayList<>();
+        agencies = new ArrayList<>();
 
-        mAdapter = new SubscribeAdapter(this,mSubscription);
+        mAdapter = new SubscribeAdapter(this,agencies);
         mRecyclerView.setAdapter(mAdapter);
 
         mAdapter.setOnItemClickListener(new SubscribeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Subscriptions subscription =mSubscription.get(position);
-                Toast.makeText(SubscribeActivity.this, ""+subscription.getTopic(), Toast.LENGTH_SHORT).show();
+                Agency agency =agencies.get(position);
+                Toast.makeText(SubscribeActivity.this, ""+agency.getUsername(), Toast.LENGTH_SHORT).show();
 
             }
         });
+
         textView = findViewById(R.id.subscriptionTextView);
 
         db
@@ -74,13 +76,14 @@ public class SubscribeActivity extends AppCompatActivity{
                     for (QueryDocumentSnapshot document : task.getResult()){
                         Map<String, Object> data = document.getData();
 
-                        String agency = data.get("name").toString();
+                        String username = data.get("username").toString();
                         String userId = data.get("userId").toString();
 
-                        output+= document.getId()+agency;
-                        Subscriptions subscription = new Subscriptions(agency,userId);
+                        output+= document.getId()+username+userId;
 
-                        mSubscription.add(subscription);
+                        Agency agency = new Agency(username,userId);
+
+                        agencies.add(agency);
 
                     }
                     textView.setText(output);
@@ -88,7 +91,7 @@ public class SubscribeActivity extends AppCompatActivity{
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem(0);
+        MenuItem menuItem = menu.getItem(1);
         menuItem.setChecked(true);
         bottomNavigationView.setOnNavigationItemSelectedListener(menuItem1 -> {
 
