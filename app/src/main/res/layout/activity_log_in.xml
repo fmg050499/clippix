@@ -5,7 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LogInActivity"
-    android:background="@color/colorDarkBlue">
+    android:background="@color/colorLoginBlue">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/emailEditText"
+        android:background="@drawable/logo"
+        android:scaleType="centerInside"/>
 
     <EditText
         android:id="@+id/emailEditText"

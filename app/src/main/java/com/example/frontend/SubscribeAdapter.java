@@ -17,7 +17,6 @@ import com.google.firebase.storage.StorageReference;
 import java.util.List;
 
 public class SubscribeAdapter extends RecyclerView.Adapter<SubscribeAdapter.ViewHolder> {
-    public SharedPreferences sharedPreferences;
     private StorageReference storageRefTemp;
     private Context mContext;
     private List<Agency> mAgencies;

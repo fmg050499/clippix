@@ -22,6 +22,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     private StorageReference storageRefTemp;
     private Context mContext;
     private List<News> mNews;
+    private OnItemClickListener mListener;
 
     public ImageAdapter(Context context,List<News> news){
         mContext = context;
@@ -31,7 +32,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     @Override
     public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.image_item,parent,false);
-        return  new ImageViewHolder(v);
+        return  new ImageViewHolder(v,mListener);
     }
 
     @Override
@@ -58,6 +59,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        
     }
 
     @Override
@@ -65,14 +68,24 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         return mNews.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder{
+    public interface OnItemClickListener{
+        void onItemCLick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mListener = listener;
+    }
+
+
+    public static class ImageViewHolder extends RecyclerView.ViewHolder{
         public TextView headlineTextView;
         public TextView usernameTextView;
         public TextView tagsTextView;
         public TextView timeTextView;
         public ImageView homeImageView;
 
-        public ImageViewHolder(View itemView) {
+
+        public ImageViewHolder(View itemView, OnItemClickListener listener) {
             super(itemView);
 
             headlineTextView = itemView.findViewById(R.id.headlineTextView);
@@ -80,6 +93,18 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             usernameTextView = itemView.findViewById(R.id.usernameTextView);
             tagsTextView = itemView.findViewById(R.id.tagsTextView);
             timeTextView = itemView.findViewById(R.id.timeTextView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener!=null){
+                        int position = getAdapterPosition();
+                        if(position!=RecyclerView.NO_POSITION){
+                            listener.onItemCLick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }

@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,13 +29,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends AppCompatActivity {
     FirebaseAuth authentication;
     FirebaseFirestore db;
 
     TextView textView;
-
-    private DrawerLayout drawer;
 
     private RecyclerView mRecyclerView;
     private ImageAdapter mAdapter;
@@ -61,19 +60,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         textView = findViewById(R.id.textView);
 
+        mAdapter.setOnItemClickListener(new ImageAdapter.OnItemClickListener() {
+            @Override
+            public void onItemCLick(int position) {
+                Toast.makeText(HomeActivity.this,""+mNews.get(position),Toast.LENGTH_LONG).show();
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        drawer = findViewById(R.id.drawerLayout);
-        NavigationView navigationView = findViewById(R.id.viewNav);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigationDrawerOpen,
-                R.string.navigationDrawerClose);
-        DrawerLayout.DrawerListener drawerListener = null;
-        drawer.addDrawerListener(drawerListener);
-        toggle.syncState();
+            }
+        });
 
 
         db
@@ -81,7 +74,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 .get()
                 .addOnCompleteListener((Task<QuerySnapshot> task) -> {
 
-                    String output = "fjkajgalgalk";
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Map<String, Object> data = document.getData();
 
@@ -98,7 +90,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         mAdapter = new ImageAdapter(HomeActivity.this, mNews);
                         mRecyclerView.setAdapter(mAdapter);
                     }
-                    //textView.setText(output);
                 });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
@@ -147,37 +138,4 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = new Intent(this, LogInActivity.class);
         startActivity(intent);
     }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.nav_message:
-                Intent intent = new Intent(HomeActivity.this, SubscribeActivity.class);
-                startActivity(intent);
-                break;
-
-            case R.id.nav_profile:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,
-//                        new ProfileFragment()).commit();
-                break;
-            case R.id.nav_settings:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,
-//                        new SettingsFragment()).commit();
-                break;
-        }
-
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-        super.onBackPressed();
-    }
-
 }
