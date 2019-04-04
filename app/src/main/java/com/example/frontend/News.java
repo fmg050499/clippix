@@ -1,6 +1,6 @@
 package com.example.frontend;
 
-public class News implements Comparable<News> {
+public class News {
     String headline;
     String body;
     String filename;
@@ -66,8 +66,4 @@ public class News implements Comparable<News> {
         this.time = time;
     }
 
-    @Override
-    public int compareTo(News other) {
-        return Integer.parseInt(other.getFilename())-Integer.parseInt(this.getFilename());
-    }
 }

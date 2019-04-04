@@ -20,12 +20,12 @@ import java.util.List;
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
     private StorageReference storageRefTemp;
     private Context mContext;
-    private List<News> mews;
+    private List<News> mNews;
     private OnItemClickListener mListener;
 
     public ImageAdapter(Context context,List<News> news){
         mContext = context;
-        mews = news;
+        mNews = news;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storageRefTemp = storage.getReference();
 
-        News newsCurrent = mews.get(position);
+        News newsCurrent = mNews.get(position);
         holder.headlineTextView.setText(newsCurrent.getHeadline());
         holder.tagsTextView.setText(newsCurrent.getTags());
         holder.timeTextView.setText(newsCurrent.getTime());
@@ -64,7 +64,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     @Override
     public int getItemCount() {
-        return mews.size();
+        return mNews.size();
     }
 
     public interface OnItemClickListener{
