@@ -33,14 +33,11 @@ public class HomeActivity extends AppCompatActivity {
     FirebaseAuth authentication;
     FirebaseFirestore db;
 
-    TextView textView;
-
     private RecyclerView mRecyclerView;
     private ImageAdapter mAdapter;
+    private Button logOut;
 
     private List<News> mNews;
-
-    Button logOutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +45,9 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         authentication = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+
+        logOut = findViewById(R.id.logOutButton);
+
 
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
@@ -58,12 +58,12 @@ public class HomeActivity extends AppCompatActivity {
         mAdapter = new ImageAdapter(HomeActivity.this, mNews);
         mRecyclerView.setAdapter(mAdapter);
 
-        textView = findViewById(R.id.textView);
+        logOut.setOnClickListener((View v)-> logOut());
 
         mAdapter.setOnItemClickListener(new ImageAdapter.OnItemClickListener() {
             @Override
             public void onItemCLick(int position) {
-                Toast.makeText(HomeActivity.this,""+mNews.get(position),Toast.LENGTH_LONG).show();
+                Toast.makeText(HomeActivity.this, "" + mNews.get(position), Toast.LENGTH_LONG).show();
 
             }
         });
@@ -97,12 +97,6 @@ public class HomeActivity extends AppCompatActivity {
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(0);
         menuItem.setChecked(true);
-
-        logOutButton = findViewById(R.id.logOutButton);
-
-        logOutButton.setOnClickListener((View view) -> {
-            logOut();
-        });
 
         bottomNavigationView.setOnNavigationItemSelectedListener(menuItem1 -> {
 
@@ -138,4 +132,5 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LogInActivity.class);
         startActivity(intent);
     }
+
 }

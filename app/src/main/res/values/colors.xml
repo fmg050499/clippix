@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">#fc6901</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGrey">#C3C3C3</color>
     <color name="colorDarkGreen">#102121</color>
     <color name="colorBlueUpload">#13374b</color>
-    <color name="colorDarkBlue">#182929</color>"
+    <color name="colorDarkBlue">#182929</color>
     <color name="colorLoginBlue">#344955</color>
+    <color name="colorOrange">#fc6901</color>
 </resources>

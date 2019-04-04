@@ -41,13 +41,12 @@ import java.util.Map;
 
 public class UploadActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
-    private static final int CAMERA_REQUEST_CODE = 1;
 
     private FirebaseFirestore db;
     private StorageReference storageRef;
     private StorageTask mUploadTask;
 
-    private Button uploadButton, chooseImageButton, openCameraButton;
+    private Button uploadButton, chooseImageButton;
 
     private EditText headlineEditText,bodyEditText,tagsEditText;
 
@@ -67,7 +66,7 @@ public class UploadActivity extends AppCompatActivity {
 
         uploadButton = findViewById(R.id.uploadButton);
         chooseImageButton = findViewById(R.id.chooseImageButton);
-//        openCameraButton = findViewById(R.id.openCameraButton);
+
 
         headlineEditText = findViewById(R.id.headlineEditText);
         bodyEditText= findViewById(R.id.bodyEditText);
@@ -80,10 +79,10 @@ public class UploadActivity extends AppCompatActivity {
 
 
         chooseImageButton.setOnClickListener((View v)-> openFileChooser());
-//        openCameraButton.setOnClickListener((View v)-> takePhotoOnCamera());
+
         uploadButton.setOnClickListener(v -> {
             if (mUploadTask != null && mUploadTask.isInProgress()){
-                Toast.makeText(this, "Upload is in progress", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Upload is in progress", Toast.LENGTH_SHORT).show();
             } else {
                 uploadFile();
             }
@@ -131,12 +130,6 @@ public class UploadActivity extends AppCompatActivity {
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
-//    private void takePhotoOnCamera() {
-//        Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        startActivityForResult(intent1, CAMERA_REQUEST_CODE);
-//        intent1.setType("image/*");
-//
-//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -154,33 +147,28 @@ public class UploadActivity extends AppCompatActivity {
             }
         }
 
-//        if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
-//            Bitmap photo = (Bitmap) data.getExtras().get("data");
-//            //imageUri = getImageUri(photo);
-//            imageView.setImageBitmap(photo);
-//        }
     }
 
-    public Uri getImageUri(Context inContext, Bitmap photo) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), photo, "Title", null);
-        return Uri.parse(path);
-    }
+//    public Uri getImageUri(Context inContext, Bitmap photo) {
+//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+//        photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+//        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), photo, "Title", null);
+//        return Uri.parse(path);
+//    }
 
-    private String getFileExtension(Uri uri){
-        ContentResolver cR = getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-        return mime.getExtensionFromMimeType(cR.getType(uri));
-    }
+//    private String getFileExtension(Uri uri){
+//        ContentResolver cR = getContentResolver();
+//        MimeTypeMap mime = MimeTypeMap.getSingleton();
+//        return mime.getExtensionFromMimeType(cR.getType(uri));
+//    }
 
     private void uploadFile(){
         FirebaseStorage storage = FirebaseStorage.getInstance();
-
         storageRef = storage.getReference("news");
+
         if (imageUri != null){
 
-            fileName = System.currentTimeMillis()+"."+getFileExtension(imageUri);
+            fileName = System.currentTimeMillis()+"";
 
             StorageReference fileReference = storageRef.child(fileName);
 
@@ -199,7 +187,6 @@ public class UploadActivity extends AppCompatActivity {
                         String userId = authentication.getCurrentUser().getUid();
                         Date currentTime = Calendar.getInstance().getTime();
                         String time = currentTime.toString();
-
 
                         Map<String, Object> news = new HashMap<>();
                         news.put("headline",headline);

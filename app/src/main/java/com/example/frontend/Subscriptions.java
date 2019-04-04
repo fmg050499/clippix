@@ -47,22 +47,5 @@ public class Subscriptions {
 
         FirebaseMessaging.getInstance().unsubscribeFromTopic(topic);
 
-//        FirebaseFirestore db;
-//        db = FirebaseFirestore.getInstance();
-
-//        db
-//                .collection("accounts")
-//                .get()
-//                .addOnCompleteListener((Task<QuerySnapshot> task)->{
-//
-//                    String output = "";
-//                    for (QueryDocumentSnapshot document : task.getResult()){
-//                        output+= document.getId();
-//                        Map<String, Object> data = document.getData();
-//                        output+=" : "+ data.get("email")+" uwu "+ data.get("passwords");
-//                        output+= "\n";
-//                    }
-//                    textView.setText(output);
-//                });
     }
 }

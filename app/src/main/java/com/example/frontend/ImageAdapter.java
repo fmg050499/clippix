@@ -3,7 +3,6 @@ package com.example.frontend;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,12 +20,12 @@ import java.util.List;
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
     private StorageReference storageRefTemp;
     private Context mContext;
-    private List<News> mNews;
+    private List<News> mews;
     private OnItemClickListener mListener;
 
     public ImageAdapter(Context context,List<News> news){
         mContext = context;
-        mNews = news;
+        mews = news;
     }
 
     @Override
@@ -40,11 +39,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storageRefTemp = storage.getReference();
 
-        News newsCurrent = mNews.get(position);
+        News newsCurrent = mews.get(position);
         holder.headlineTextView.setText(newsCurrent.getHeadline());
-        holder.usernameTextView.setText(newsCurrent.getUserId());
         holder.tagsTextView.setText(newsCurrent.getTags());
         holder.timeTextView.setText(newsCurrent.getTime());
+        holder.bodyTextView.setText(newsCurrent.getBody());
 
         try {
             StorageReference tempRef = storageRefTemp.child("news").child(newsCurrent.getFilename());
@@ -60,12 +59,12 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             e.printStackTrace();
         }
 
-        
+
     }
 
     @Override
     public int getItemCount() {
-        return mNews.size();
+        return mews.size();
     }
 
     public interface OnItemClickListener{
@@ -79,20 +78,20 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     public static class ImageViewHolder extends RecyclerView.ViewHolder{
         public TextView headlineTextView;
-        public TextView usernameTextView;
         public TextView tagsTextView;
         public TextView timeTextView;
         public ImageView homeImageView;
+        public TextView bodyTextView;
 
 
         public ImageViewHolder(View itemView, OnItemClickListener listener) {
             super(itemView);
 
-            headlineTextView = itemView.findViewById(R.id.headlineTextView);
+            headlineTextView = itemView.findViewById(R.id.homeHeadlineTextView);
             homeImageView = itemView.findViewById(R.id.homeImageView);
-            usernameTextView = itemView.findViewById(R.id.usernameTextView);
-            tagsTextView = itemView.findViewById(R.id.tagsTextView);
-            timeTextView = itemView.findViewById(R.id.timeTextView);
+            tagsTextView = itemView.findViewById(R.id.homeTagsTextView);
+            timeTextView = itemView.findViewById(R.id.homeTimeTextView);
+            bodyTextView = itemView.findViewById(R.id.homeBodyTextView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -10,11 +10,17 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class SubscribeAdapter extends RecyclerView.Adapter<SubscribeAdapter.ViewHolder> {
     private StorageReference storageRefTemp;
@@ -37,41 +43,42 @@ public class SubscribeAdapter extends RecyclerView.Adapter<SubscribeAdapter.View
     public void onBindViewHolder( ViewHolder holder, int position) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storageRefTemp = storage.getReference();
+        FirebaseAuth authentication;
+        FirebaseFirestore db;
+        authentication = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        List<String> mySubscriptions;
+        mySubscriptions = new ArrayList<>();
 
         Agency agencyCurrent = mAgencies.get(position);
         holder.headlineTextView.setText(agencyCurrent.getUsername());
 
+        db
+                .collection("subscribers")
+                .get()
+                .addOnCompleteListener((Task<QuerySnapshot> task)->{
+                    String output="";
+                    for(QueryDocumentSnapshot document : task.getResult()){
+                        Map<String, Object> data = document.getData();
 
-//        holder.toggleButton.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//
-//                if((holder.toggleButton.isChecked())) {
-//                    SharedPreferences.Editor editor = sharedPreferences.edit();
-//                    editor.putBoolean("tgpref", true); // value to store
-//                    editor.commit();
-//                }
-//                else
-//                {
-//                    SharedPreferences.Editor editor = sharedPreferences.edit();
-//                    editor.putBoolean("tgpref", false); // value to store
-//                    editor.commit();
-//                }
-//            }
-//        });
-//
-//        SharedPreferences sharedPreferences = getS(MODE_PRIVATE);
-//        boolean tgpref = sharedPreferences.getBoolean("tgpref", true);  //default is true
-//        if (tgpref = true) //if (tgpref) may be enough, not sure
-//        {
-//            tg.setChecked(true);
-//        }
-//        else
-//        {
-//            tg.setChecked(false);
-//        }
+                        String userId = data.get("userId").toString();
+                        String agency = data.get("subs").toString();
+
+                        if(userId.equals(authentication.getCurrentUser().getUid())){
+                            mySubscriptions.add(agency);
+                            output+=agency;
+                        }
+
+
+                    }
+                });
+        for(String sub : mySubscriptions){
+            if(sub.equals(agencyCurrent.getUsername())){
+                holder.toggleButton.isChecked();
+            }else {
+                holder.toggleButton.setChecked(false);
+            }
+        }
 
         holder.toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

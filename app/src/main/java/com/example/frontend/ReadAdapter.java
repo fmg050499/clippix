@@ -17,7 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-//amo ni ang ma connect sang list mo sa lay out mo
+
 
 public class ReadAdapter extends RecyclerView.Adapter<ReadAdapter.ViewHolder> {
     private StorageReference storageRefTemp;
@@ -42,7 +42,6 @@ public class ReadAdapter extends RecyclerView.Adapter<ReadAdapter.ViewHolder> {
 
         News subscriptionCurrent = mSubscription.get(position);
         holder.headlineTextView.setText(subscriptionCurrent.getHeadline());
-        holder.usernameTextView.setText(subscriptionCurrent.getUserId());
         holder.tagsTextView.setText(subscriptionCurrent.getTags());
         holder.timeTextView.setText(subscriptionCurrent.getTime());
 
@@ -69,7 +68,6 @@ public class ReadAdapter extends RecyclerView.Adapter<ReadAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView headlineTextView;
-        public TextView usernameTextView;
         public TextView tagsTextView;
         public TextView timeTextView;
         public ImageView homeImageView;
@@ -81,7 +79,6 @@ public class ReadAdapter extends RecyclerView.Adapter<ReadAdapter.ViewHolder> {
 
             headlineTextView = itemView.findViewById(R.id.readHeadlineTextView);
             homeImageView = itemView.findViewById(R.id.readImageView);
-            usernameTextView = itemView.findViewById(R.id.readUsernameTextView);
             tagsTextView = itemView.findViewById(R.id.readTagsTextView);
             timeTextView = itemView.findViewById(R.id.readTimeTextView);
 

@@ -41,12 +41,12 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 app:menu="@menu/bottom_navigation_bar"
-                app:itemIconTint="@color/colorGrey"
+                app:itemIconTint="@color/colorOrange"
+                android:backgroundTint="@color/colorLoginBlue"
                 android:background="@drawable/white_grey_border_top"
                 app:itemTextColor="@color/colorGrey"/>
 
         </android.support.design.widget.AppBarLayout>
-
     </android.support.design.widget.CoordinatorLayout>
 
 </RelativeLayout>

@@ -38,11 +38,12 @@ public class SubscribeActivity extends AppCompatActivity{
     private SubscribeAdapter mAdapter;
 
     private List<Agency> agencies;
+    private List<String> mySubscriptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(SubscribeActivity.this,"this is a test",Toast.LENGTH_LONG).show();
+        //Toast.makeText(SubscribeActivity.this,"this is a test",Toast.LENGTH_LONG).show();
         setContentView(R.layout.activity_subscribe);
         authentication = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -72,21 +73,19 @@ public class SubscribeActivity extends AppCompatActivity{
                 .get()
                 .addOnCompleteListener((Task<QuerySnapshot> task)->{
 
-                    String output ="";
                     for (QueryDocumentSnapshot document : task.getResult()){
                         Map<String, Object> data = document.getData();
 
                         String username = data.get("username").toString();
                         String userId = data.get("userId").toString();
 
-                        output+= document.getId()+username+userId;
-
                         Agency agency = new Agency(username,userId);
 
                         agencies.add(agency);
+                        mAdapter = new SubscribeAdapter(SubscribeActivity.this, agencies);
+                        mRecyclerView.setAdapter(mAdapter);
 
                     }
-                    textView.setText(output);
                 });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);

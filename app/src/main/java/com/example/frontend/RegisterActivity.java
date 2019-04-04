@@ -1,6 +1,7 @@
 package com.example.frontend;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +25,12 @@ import java.util.regex.Pattern;
 public class RegisterActivity extends AppCompatActivity {
     FirebaseAuth authentication;
     FirebaseFirestore db;
+    private StorageReference storageRef;
+    private StorageTask mUploadTask;
+    private String fileName;
+
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private Uri imageUri;
 
     EditText emailEditText, passwordEditText,usernameEditText;
 

@@ -28,7 +28,8 @@
                 android:id="@+id/toggleButton"
                 android:layout_below="@id/headlineTextView"
                 android:textOff="subscribe"
-                android:textOn="unsubscribe"/>
+                android:textOn="unsubscribe" />
+
         </RelativeLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

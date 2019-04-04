@@ -7,14 +7,15 @@
     tools:context=".SubscribeActivity"
     android:background="@color/colorBlueUpload">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/subscriptionRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="700dp"
+            android:layout_height="600dp"
             android:background="@color/colorBlueUpload"/>
 
 
@@ -24,25 +25,31 @@
             android:layout_height="wrap_content"
             android:minLines="5" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
-    <android.support.design.widget.AppBarLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
+        android:layout_height="match_parent">
 
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/bottomNavigation"
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            app:menu="@menu/bottom_navigation_bar"
-            app:itemIconTint="@color/colorGrey"
-            android:background="@drawable/white_grey_border_top"
-            app:itemTextColor="@color/colorGrey"/>
+            android:layout_gravity="bottom">
 
-    </android.support.design.widget.AppBarLayout>
+            <android.support.design.widget.BottomNavigationView
+                android:id="@+id/bottomNavigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                app:menu="@menu/bottom_navigation_bar"
+                app:itemIconTint="@color/colorOrange"
+                android:backgroundTint="@color/colorLoginBlue"
+                android:background="@drawable/white_grey_border_top"
+                app:itemTextColor="@color/colorGrey"/>
+
+        </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
 
 

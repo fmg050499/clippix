@@ -61,17 +61,16 @@ public class NotificationActivity extends AppCompatActivity{
         mRecyclerView.setAdapter(mAdapter);
 
         textView = findViewById(R.id.notificationTextView);
-        //current users subscriptions
+
         db
                 .collection("subscribers")
                 .whereEqualTo("userId", authentication.getCurrentUser().getUid())
                 .get()
                 .addOnCompleteListener((Task<QuerySnapshot> task)->{
-                    String output ="";
                     for (QueryDocumentSnapshot document : task.getResult()){
                         Map<String, Object> data = document.getData();
 
-                        String subscriptions = data.get("subs").toString();
+                        String subscriptions = data.get("subs").toString().toLowerCase();
 
                         currentUsersSubscriptions.add(subscriptions);
                     }
@@ -82,11 +81,10 @@ public class NotificationActivity extends AppCompatActivity{
                .get()
                .addOnCompleteListener((Task<QuerySnapshot> task)->{
 
-                   String output ="";
                    for (QueryDocumentSnapshot document : task.getResult()){
                         for(String topic:currentUsersSubscriptions){
                             Map<String, Object> data = document.getData();
-                            if(topic.equals(data.get("tags").toString())){
+                            if(topic.equals(data.get("tags").toString().toLowerCase())){
                                 String fileName = data.get("filename").toString();
                                 String headline = data.get("headline").toString();
                                 String body = data.get("body").toString();
@@ -94,7 +92,6 @@ public class NotificationActivity extends AppCompatActivity{
                                 String time = data.get("time").toString();
                                 String userId = data.get("user_id").toString();
 
-                                output+= document.getId()+headline+body+userId;
                                 News news = new News (headline,body,fileName,tags,time,userId);
 
                                 newsSubscribed.add(news);
@@ -103,10 +100,10 @@ public class NotificationActivity extends AppCompatActivity{
                             }
                         }
                    }
-                   //textView.setText(output);
+
                });
 
-                    BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavigation);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavigation);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(4);
         menuItem.setChecked(true);

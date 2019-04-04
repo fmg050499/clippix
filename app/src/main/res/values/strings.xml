@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">frontEnd</string>
+    <string name="app_name">Clippix</string>
 
     <string name="navigationDrawerOpen">Open navigation drawer</string>
     <string name="navigationDrawerClose">Close navigation drawer</string>

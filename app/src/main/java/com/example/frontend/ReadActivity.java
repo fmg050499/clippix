@@ -64,7 +64,6 @@ public class ReadActivity extends AppCompatActivity{
 
         textView = findViewById(R.id.readTextView);
 
-        //current users subscriptions
         db
                 .collection("subscribers")
                 .whereEqualTo("userId", authentication.getCurrentUser().getUid())
@@ -93,13 +92,12 @@ public class ReadActivity extends AppCompatActivity{
 
                                 String agencyId = data.get("userId").toString();
 
-//                                output+=agencyId;
                                 agencyIds.add(agencyId);
 
                             }
                         }
                     }
-//                    textView.setText(output);
+
 
                 });
 
@@ -111,7 +109,6 @@ public class ReadActivity extends AppCompatActivity{
                     for (QueryDocumentSnapshot document : task.getResult()){
                         Map<String, Object> data = document.getData();
                         for(String id : agencyIds){
-                            output+=document.getId();
                             if(id.equals(data.get("user_id").toString())){
                                 String fileName = data.get("filename").toString();
                                 String headline = data.get("headline").toString();
@@ -128,7 +125,7 @@ public class ReadActivity extends AppCompatActivity{
                             }
                         }
                     }
-                    //textView.setText(output);
+
                 });
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottomNavigation);
